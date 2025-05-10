@@ -7,13 +7,13 @@ import random
 pygame.init()
 
 # Screen dimensions
-WIDTH = 800
-HEIGHT = 600
+WIDTH = 1200  # Tăng chiều rộng
+HEIGHT = 800  # Tăng chiều cao
 GRID_SIZE = 5
 CELL_SIZE = 50
 GRID_OFFSET_X = 50
 GRID_OFFSET_Y = 100
-BOT_GRID_OFFSET_X = WIDTH // 2 + 50
+BOT_GRID_OFFSET_X = WIDTH // 2 + 100  # Điều chỉnh vị trí lưới bot
 
 # Colors
 WHITE = (255, 255, 255)
@@ -142,8 +142,8 @@ last_bot_action = 0
 BOT_ACTION_INTERVAL = 8000
 bot_messages = []
 BOT_MESSAGE_DURATION = 5000
-last_disrupt_time = 0  # Cooldown cho Disrupt
-DISRUPT_COOLDOWN = 15000  # 15 giây cooldown
+last_disrupt_time = 0
+DISRUPT_COOLDOWN = 15000
 
 # Player plan tracking
 player_plan = []
@@ -161,12 +161,36 @@ DIVERSITY_BONUS = 30
 market_prices = {"rice": 25, "corn": 35, "tomato": 50, "wheat": 40}
 original_profits = {"rice": 25, "corn": 35, "tomato": 50, "wheat": 40}
 
-# Crops data
+# Crops data (Thêm hình ảnh rau củ từ mã cũ)
 CROPS = {
-    "rice": {"cost": 10, "time": 2, "profit": 25, "sprite": pygame.Surface((CELL_SIZE - 10, CELL_SIZE - 10)), "color": GREEN},
-    "corn": {"cost": 15, "time": 2, "profit": 35, "sprite": pygame.Surface((CELL_SIZE - 10, CELL_SIZE - 10)), "color": YELLOW},
-    "tomato": {"cost": 20, "time": 4, "profit": 50, "sprite": pygame.Surface((CELL_SIZE - 10, CELL_SIZE - 10)), "color": RED},
-    "wheat": {"cost": 12, "time": 3, "profit": 40, "sprite": pygame.Surface((CELL_SIZE - 10, CELL_SIZE - 10)), "color": BROWN},
+    "rice": {
+        "cost": 10,
+        "time": 2,
+        "profit": 25,
+        "sprite": pygame.transform.scale(pygame.image.load(os.path.join("Tiles", "tile_0059.png")), (CELL_SIZE - 10, CELL_SIZE - 10)),
+        "color": GREEN
+    },
+    "corn": {
+        "cost": 15,
+        "time": 2,
+        "profit": 35,
+        "sprite": pygame.transform.scale(pygame.image.load(os.path.join("Tiles", "tile_0058.png")), (CELL_SIZE - 10, CELL_SIZE - 10)),
+        "color": YELLOW
+    },
+    "tomato": {
+        "cost": 20,
+        "time": 4,
+        "profit": 50,
+        "sprite": pygame.transform.scale(pygame.image.load(os.path.join("Tiles", "tile_0057.png")), (CELL_SIZE - 10, CELL_SIZE - 10)),
+        "color": RED
+    },
+    "wheat": {
+        "cost": 12,
+        "time": 3,
+        "profit": 40,
+        "sprite": pygame.transform.scale(pygame.image.load(os.path.join("Tiles", "tile_0056.png")), (CELL_SIZE - 10, CELL_SIZE - 10)),  # Giả định, thay bằng file thực tế
+        "color": BROWN
+    },
 }
 
 # Farm grid
@@ -174,20 +198,20 @@ farm_grid = [[None for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
 crop_timers = [[0 for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
 crop_protected = [[False for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
 
-# Buttons
+# Buttons (Điều chỉnh vị trí các nút xuống dưới lưới farm)
 play_button_rect = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 - 50, 200, 50)
 guide_button_rect = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 + 20, 200, 50)
 back_button_rect = pygame.Rect(50, HEIGHT - 70, 100, 50)
 play_again_button_rect = pygame.Rect(WIDTH // 2 - 100, HEIGHT - 100, 200, 50)
-finish_button_rect = pygame.Rect(WIDTH - 150, HEIGHT - 210, 100, 50)
-remove_button_rect = pygame.Rect(50 + 4 * 120, 20, 100, 50)
-water_button_rect = pygame.Rect(50 + 3 * 120, 20, 100, 50)
-protect_button_rect = pygame.Rect(50 + 5 * 120, 20, 100, 50)
-disrupt_button_rect = pygame.Rect(50 + 6 * 120, 20, 100, 50)
+finish_button_rect = pygame.Rect(WIDTH - 150, HEIGHT - 70, 100, 50)
+remove_button_rect = pygame.Rect(50 + 3 * 120, GRID_OFFSET_Y + GRID_SIZE * CELL_SIZE + 20, 100, 50)
+water_button_rect = pygame.Rect(50 + 4 * 120, GRID_OFFSET_Y + GRID_SIZE * CELL_SIZE + 20, 100, 50)
+protect_button_rect = pygame.Rect(50 + 5 * 120, GRID_OFFSET_Y + GRID_SIZE * CELL_SIZE + 20, 100, 50)
+disrupt_button_rect = pygame.Rect(50 + 6 * 120, GRID_OFFSET_Y + GRID_SIZE * CELL_SIZE + 20, 100, 50)
 back_to_menu_button_rect = pygame.Rect(WIDTH // 2 - 150, HEIGHT - 150, 100, 50)
 view_plans_button_rect = pygame.Rect(WIDTH // 2 + 50, HEIGHT - 150, 100, 50)
-weather_rect = pygame.Rect((50 + 700) // 2 - 80, 360, 160, 40)
-next_weather_rect = pygame.Rect((50 + 700) // 2 - 80, 410, 160, 40)
+weather_rect = pygame.Rect((50 + 700) // 2 - 80, GRID_OFFSET_Y + GRID_SIZE * CELL_SIZE + 70, 160, 40)
+next_weather_rect = pygame.Rect((50 + 700) // 2 - 80, GRID_OFFSET_Y + GRID_SIZE * CELL_SIZE + 120, 160, 40)
 
 # Modes
 selected_crop = None
@@ -300,7 +324,7 @@ def reset_game():
 def update_market_prices():
     global market_prices
     for crop in market_prices:
-        fluctuation = random.uniform(-0.3, 0.3)  # Tăng dao động lên ±30%
+        fluctuation = random.uniform(-0.3, 0.3)
         market_prices[crop] = max(0.5 * original_profits[crop], original_profits[crop] * (1 + fluctuation))
 
 def apply_weather_effects(grid, timers, protected_grid):
@@ -712,7 +736,6 @@ def update_bot():
             bot_timers[i][j] = CROPS[crop]["time"]
             message = f"Bot planted {crop} at ({i}, {j})"
             bot_messages.append((message, current_time))
-            # Thêm animation giả lập
             pygame.draw.rect(screen, YELLOW, (BOT_GRID_OFFSET_X + j * CELL_SIZE, GRID_OFFSET_Y + i * CELL_SIZE, CELL_SIZE, CELL_SIZE), 2)
             pygame.display.flip()
             pygame.time.wait(200)
@@ -724,7 +747,6 @@ def update_bot():
             harvested_crops.add(crop)
             message = f"Bot harvested at ({i}, {j}), profit now: {bot_profit}"
             bot_messages.append((message, current_time))
-            # Thêm animation giả lập
             pygame.draw.rect(screen, GREEN, (BOT_GRID_OFFSET_X + j * CELL_SIZE, GRID_OFFSET_Y + i * CELL_SIZE, CELL_SIZE, CELL_SIZE), 2)
             pygame.display.flip()
             pygame.time.wait(200)
@@ -855,7 +877,6 @@ def main():
                             bot_profit += DIVERSITY_BONUS
                             message = f"Diversity bonus applied! +{DIVERSITY_BONUS} profit!"
                             bot_messages.append((message, pygame.time.get_ticks()))
-                            # Thêm hiệu ứng pop-up giả lập
                             pygame.draw.rect(screen, YELLOW, (WIDTH // 2 - 100, HEIGHT // 2 - 25, 200, 50))
                             pygame.display.flip()
                             pygame.time.wait(500)
@@ -900,7 +921,7 @@ def main():
                             bot_cell_rect = pygame.Rect(BOT_GRID_OFFSET_X + j * CELL_SIZE, GRID_OFFSET_Y + i * CELL_SIZE, CELL_SIZE, CELL_SIZE)
                             if disrupt_mode and bot_cell_rect.collidepoint(mouse_pos) and bot_grid[i][j] is not None and budget >= 20:
                                 budget -= 20
-                                bot_timers[i][j] = min(10, bot_timers[i][j] + 1)  # Giới hạn timer tối đa 10
+                                bot_timers[i][j] = min(10, bot_timers[i][j] + 1)
                                 player_plan.append([[i, j], "disrupt"])
                                 message = f"Player disrupted bot's crop at ({i}, {j})!"
                                 bot_messages.append((message, pygame.time.get_ticks()))
