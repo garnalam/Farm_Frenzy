@@ -9,11 +9,11 @@ pygame.init()
 # Screen dimensions
 WIDTH = 800
 HEIGHT = 600
-GRID_SIZE = 5  # 5x5 grid for farm
-CELL_SIZE = 50  # Size of each cell in the grid
+GRID_SIZE = 5
+CELL_SIZE = 50
 GRID_OFFSET_X = 50
 GRID_OFFSET_Y = 100
-BOT_GRID_OFFSET_X = WIDTH // 2 + 50  # Bot's farm on the right
+BOT_GRID_OFFSET_X = WIDTH // 2 + 50
 
 # Colors
 WHITE = (255, 255, 255)
@@ -31,6 +31,7 @@ USERNAME_INPUT = 1
 GUIDE = 2
 PLAY = 3
 GAME_OVER = 4
+VIEW_PLANS = 5
 game_state = MENU
 
 # Initialize screen
@@ -123,9 +124,11 @@ budget = 150
 day = 1
 MAX_DAYS = 10
 profit = 0
-DAY_DURATION = 11 * 1000  # 11 seconds per day
+DAY_DURATION = 8 * 1000
 day_timer = 0
 last_day_update = 0
+xp = 0
+level = 1
 
 # Bot stats
 bot_profit = 0
@@ -136,58 +139,62 @@ bot_timers = [[0 for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
 bot_plan_steps = []
 bot_step_index = 0
 last_bot_action = 0
-BOT_ACTION_INTERVAL = 10000  # 10 seconds per bot action
+BOT_ACTION_INTERVAL = 8000
 bot_messages = []
-BOT_MESSAGE_DURATION = 5000  # Display each message for 5 seconds
+BOT_MESSAGE_DURATION = 5000
+last_disrupt_time = 0  # Cooldown cho Disrupt
+DISRUPT_COOLDOWN = 15000  # 15 giây cooldown
+
+# Player plan tracking
+player_plan = []
 
 # Weather system
 WEATHER_TYPES = ["Sunny", "Rainy", "Dry"]
-current_weather = "Sunny"  # Default weather
+current_weather = "Sunny"
+next_weather = "Sunny"
 
 # Crop diversity tracking
-harvested_crops = set()  # Track which crops have been harvested
-DIVERSITY_BONUS = 20  # Bonus for harvesting all crop types
+harvested_crops = set()
+DIVERSITY_BONUS = 30
 
-# Crops data (balanced)
+# Market prices
+market_prices = {"rice": 25, "corn": 35, "tomato": 50, "wheat": 40}
+original_profits = {"rice": 25, "corn": 35, "tomato": 50, "wheat": 40}
+
+# Crops data
 CROPS = {
-    "rice": {
-        "cost": 10,
-        "time": 2,
-        "profit": 25,
-        "sprite": pygame.transform.scale(pygame.image.load(os.path.join("Tiles", "tile_0059.png")), (CELL_SIZE - 10, CELL_SIZE - 10)),
-        "color": GREEN
-    },
-    "corn": {
-        "cost": 15,
-        "time": 2,  # Reduced from 3 to make it more competitive
-        "profit": 35,
-        "sprite": pygame.transform.scale(pygame.image.load(os.path.join("Tiles", "tile_0058.png")), (CELL_SIZE - 10, CELL_SIZE - 10)),
-        "color": YELLOW
-    },
-    "tomato": {
-        "cost": 20,
-        "time": 4,
-        "profit": 50,
-        "sprite": pygame.transform.scale(pygame.image.load(os.path.join("Tiles", "tile_0057.png")), (CELL_SIZE - 10, CELL_SIZE - 10)),
-        "color": RED
-    },
+    "rice": {"cost": 10, "time": 2, "profit": 25, "sprite": pygame.Surface((CELL_SIZE - 10, CELL_SIZE - 10)), "color": GREEN},
+    "corn": {"cost": 15, "time": 2, "profit": 35, "sprite": pygame.Surface((CELL_SIZE - 10, CELL_SIZE - 10)), "color": YELLOW},
+    "tomato": {"cost": 20, "time": 4, "profit": 50, "sprite": pygame.Surface((CELL_SIZE - 10, CELL_SIZE - 10)), "color": RED},
+    "wheat": {"cost": 12, "time": 3, "profit": 40, "sprite": pygame.Surface((CELL_SIZE - 10, CELL_SIZE - 10)), "color": BROWN},
 }
 
-# Farm grid (5x5) for player
+# Farm grid
 farm_grid = [[None for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
 crop_timers = [[0 for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
+crop_protected = [[False for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
 
 # Buttons
 play_button_rect = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 - 50, 200, 50)
 guide_button_rect = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 + 20, 200, 50)
 back_button_rect = pygame.Rect(50, HEIGHT - 70, 100, 50)
 play_again_button_rect = pygame.Rect(WIDTH // 2 - 100, HEIGHT - 100, 200, 50)
-finish_button_rect = pygame.Rect(WIDTH - 150, HEIGHT - 70, 100, 50)
-remove_button_rect = pygame.Rect(50 + 3 * 120, 20, 100, 50)
+finish_button_rect = pygame.Rect(WIDTH - 150, HEIGHT - 210, 100, 50)
+remove_button_rect = pygame.Rect(50 + 4 * 120, 20, 100, 50)
+water_button_rect = pygame.Rect(50 + 3 * 120, 20, 100, 50)
+protect_button_rect = pygame.Rect(50 + 5 * 120, 20, 100, 50)
+disrupt_button_rect = pygame.Rect(50 + 6 * 120, 20, 100, 50)
+back_to_menu_button_rect = pygame.Rect(WIDTH // 2 - 150, HEIGHT - 150, 100, 50)
+view_plans_button_rect = pygame.Rect(WIDTH // 2 + 50, HEIGHT - 150, 100, 50)
+weather_rect = pygame.Rect((50 + 700) // 2 - 80, 360, 160, 40)
+next_weather_rect = pygame.Rect((50 + 700) // 2 - 80, 410, 160, 40)
 
-# Crop selection and remove mode
+# Modes
 selected_crop = None
 remove_mode = False
+water_mode = False
+protect_mode = False
+disrupt_mode = False
 
 # Username input
 username_input = ""
@@ -221,7 +228,7 @@ def save_high_scores():
         json.dump(high_scores, f, indent=4)
 
 def setup():
-    global all_configs, selected_config, budget, ai_plans, ai_profits, selected_bot, bot_plan_steps, bot_step_index
+    global all_configs, selected_config, budget, ai_plans, ai_profits, selected_bot, bot_plan_steps, bot_step_index, next_weather
     print("Loading AI plans from file...")
     try:
         with open("ai_plans.json", "r") as f:
@@ -242,6 +249,8 @@ def setup():
         bot_plan_steps = ai_plans[selected_bot]
         bot_step_index = 0
         
+        next_weather = random.choice(WEATHER_TYPES)
+        
         print(f"Selected configuration with budget {budget}")
         print(f"Selected bot: {selected_bot}")
         print(f"Bot plan steps: {bot_plan_steps}")
@@ -254,20 +263,24 @@ def setup():
 
 def reset_game():
     global username, high_score, budget, day, profit, day_timer, last_day_update
-    global farm_grid, crop_timers, selected_crop, remove_mode
+    global farm_grid, crop_timers, crop_protected, selected_crop, remove_mode, water_mode, protect_mode, disrupt_mode
     global bot_profit, bot_grid, bot_timers, bot_step_index, last_bot_action, previous_config, bot_messages
-    global current_weather, harvested_crops
+    global current_weather, next_weather, harvested_crops, player_plan, market_prices, xp, last_disrupt_time
     username = ""
     high_score = 0
-    budget = 100
+    budget = 150
     day = 1
     profit = 0
     day_timer = 0
     last_day_update = 0
     farm_grid = [[None for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
     crop_timers = [[0 for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
+    crop_protected = [[False for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
     selected_crop = None
     remove_mode = False
+    water_mode = False
+    protect_mode = False
+    disrupt_mode = False
     bot_profit = 0
     bot_grid = [[None for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
     bot_timers = [[0 for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
@@ -275,9 +288,198 @@ def reset_game():
     last_bot_action = 0
     bot_messages = []
     current_weather = "Sunny"
+    next_weather = random.choice(WEATHER_TYPES)
     harvested_crops = set()
+    player_plan = []
+    market_prices = original_profits.copy()
+    xp = 0
+    last_disrupt_time = 0
     previous_config = selected_config
     setup()
+
+def update_market_prices():
+    global market_prices
+    for crop in market_prices:
+        fluctuation = random.uniform(-0.3, 0.3)  # Tăng dao động lên ±30%
+        market_prices[crop] = max(0.5 * original_profits[crop], original_profits[crop] * (1 + fluctuation))
+
+def apply_weather_effects(grid, timers, protected_grid):
+    global profit, bot_profit, harvested_crops
+    for i in range(GRID_SIZE):
+        for j in range(GRID_SIZE):
+            if grid[i][j]:
+                crop = grid[i][j]
+                crop_data = CROPS[crop]
+                time_reduction = 0
+                fail_chance = 0
+                if current_weather == "Sunny" and crop == "tomato":
+                    time_reduction = 1
+                elif current_weather == "Rainy":
+                    if crop == "rice":
+                        time_reduction = 1
+                    elif crop == "tomato" and not protected_grid[i][j]:
+                        fail_chance = 0.5
+                elif current_weather == "Dry":
+                    if crop == "corn":
+                        time_reduction = 1
+                    elif crop == "rice" and not protected_grid[i][j]:
+                        fail_chance = 0.5
+                
+                if fail_chance > 0 and random.random() < fail_chance:
+                    grid[i][j] = None
+                    timers[i][j] = 0
+                    message = f"{'Bot' if grid is bot_grid else 'Player'}'s {crop} at ({i}, {j}) failed due to {current_weather} weather!"
+                    bot_messages.append((message, pygame.time.get_ticks()))
+                    continue
+                
+                if time_reduction > 0 and timers[i][j] > 0:
+                    timers[i][j] = max(1, timers[i][j] - time_reduction)
+
+def draw_grid(grid, timers, offset_x, protected_grid, hide_crops=False):
+    for i in range(GRID_SIZE):
+        for j in range(GRID_SIZE):
+            cell_rect = pygame.Rect(offset_x + j * CELL_SIZE, GRID_OFFSET_Y + i * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+            screen.blit(soil_tile, (cell_rect.x, cell_rect.y))
+            if grid[i][j]:
+                if hide_crops:
+                    pygame.draw.rect(screen, GRAY, cell_rect)
+                else:
+                    crop_data = CROPS[grid[i][j]]
+                    screen.blit(crop_data["sprite"], (cell_rect.x + 5, cell_rect.y + 5))
+                    if timers[i][j] > 0:
+                        timer_text = font.render(str(timers[i][j]), True, BLACK)
+                        screen.blit(timer_text, (cell_rect.x + 15, cell_rect.y + 15))
+                if protected_grid[i][j]:
+                    pygame.draw.rect(screen, BLUE, cell_rect, 2)
+                if water_mode and grid[i][j] and cell_rect.collidepoint(pygame.mouse.get_pos()):
+                    pygame.draw.rect(screen, GREEN, cell_rect, 2)
+                if protect_mode and grid[i][j] and not protected_grid[i][j] and cell_rect.collidepoint(pygame.mouse.get_pos()):
+                    pygame.draw.rect(screen, BLUE, cell_rect, 2)
+                if disrupt_mode and bot_grid[i][j] and cell_rect.collidepoint(pygame.mouse.get_pos()):
+                    pygame.draw.rect(screen, RED, cell_rect, 2)
+
+def draw_play():
+    print("Drawing play screen...")
+    if background_img:
+        screen.blit(background_img, (0, 0))
+    else:
+        screen.fill(GREEN)
+    
+    draw_grid(farm_grid, crop_timers, GRID_OFFSET_X, crop_protected, hide_crops=False)
+    draw_grid(bot_grid, bot_timers, BOT_GRID_OFFSET_X, [[False for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)], hide_crops=False)
+    
+    player_label = font.render("Your Farm", True, BLACK)
+    bot_label = font.render(f"Bot ({selected_bot.capitalize()})", True, BLACK)
+    screen.blit(player_label, (GRID_OFFSET_X, GRID_OFFSET_Y - 30))
+    screen.blit(bot_label, (BOT_GRID_OFFSET_X, GRID_OFFSET_Y - 30))
+    
+    remaining_time = max(0, (DAY_DURATION - day_timer) // 1000)
+    minutes = remaining_time // 60
+    seconds = remaining_time % 60
+    timer_display = f"Time: {minutes:02d}:{seconds:02d}"
+    
+    day_rect = pygame.Rect(WIDTH - 180, 20, 160, 100)
+    screen.blit(stats_panel, (day_rect.x, day_rect.y), (0, 0, 160, 100))
+    day_text = font.render(f"Day: {day}/{MAX_DAYS}", True, BLACK)
+    time_text = font.render(timer_display, True, BLACK)
+    level_text = font.render(f"Level: {level}", True, BLACK)
+    xp_text = font.render(f"XP: {xp}", True, BLACK)
+    screen.blit(day_text, (day_rect.x + 10, day_rect.y + 10))
+    screen.blit(time_text, (day_rect.x + 10, day_rect.y + 35))
+    screen.blit(level_text, (day_rect.x + 10, day_rect.y + 60))
+    screen.blit(xp_text, (day_rect.x + 10, day_rect.y + 85))
+    
+    stats_rect = pygame.Rect(WIDTH - 180, HEIGHT - 150, 160, 120)
+    screen.blit(stats_panel, (stats_rect.x, stats_rect.y), (0, 0, 160, 120))
+    budget_text = font.render(f"Budget: {budget}", True, BLACK)
+    profit_text = font.render(f"Profit: {profit}", True, BLACK)
+    high_score_text = font.render(f"High Score: {high_score}", True, BLACK)
+    bot_profit_text = font.render(f"Bot Profit: {'???' if day <= MAX_DAYS else bot_profit}", True, BLACK)
+    screen.blit(budget_text, (stats_rect.x + 10, stats_rect.y + 10))
+    screen.blit(profit_text, (stats_rect.x + 10, stats_rect.y + 35))
+    screen.blit(high_score_text, (stats_rect.x + 10, stats_rect.y + 60))
+    screen.blit(bot_profit_text, (stats_rect.x + 10, stats_rect.y + 85))
+    
+    screen.blit(stats_panel, (weather_rect.x, weather_rect.y), (0, 0, 160, 40))
+    weather_text = font.render(f"Weather: {current_weather}", True, BLACK)
+    text_rect = weather_text.get_rect(center=(weather_rect.x + weather_rect.width // 2, weather_rect.y + weather_rect.height // 2))
+    screen.blit(weather_text, text_rect)
+    
+    screen.blit(stats_panel, (next_weather_rect.x, next_weather_rect.y), (0, 0, 160, 40))
+    next_weather_text = font.render(f"Tomorrow: {next_weather}", True, BLACK)
+    next_text_rect = next_weather_text.get_rect(center=(next_weather_rect.x + next_weather_rect.width // 2, next_weather_rect.y + next_weather_rect.height // 2))
+    screen.blit(next_weather_text, next_text_rect)
+    
+    diversity_rect = pygame.Rect(50, HEIGHT - 100, 160, 30)
+    screen.blit(stats_panel, (diversity_rect.x, diversity_rect.y), (0, 0, 160, 30))
+    diversity_text = font.render(f"Diversity: {len(harvested_crops)}/4", True, BLACK)
+    screen.blit(diversity_text, (diversity_rect.x + 10, diversity_rect.y + 5))
+    
+    mouse_pos = pygame.mouse.get_pos()
+    for idx, (crop_name, _) in enumerate(CROPS.items()):
+        button_rect = pygame.Rect(50 + idx * 120, 20, 100, 50)
+        if button_rect.collidepoint(mouse_pos):
+            screen.blit(button_square_beige_pressed, (button_rect.x, button_rect.y))
+        else:
+            if selected_crop == crop_name and not remove_mode and not water_mode and not protect_mode and not disrupt_mode:
+                screen.blit(button_square_beige_pressed, (button_rect.x, button_rect.y))
+            else:
+                screen.blit(button_square_beige, (button_rect.x, button_rect.y))
+        text = font.render(f"{crop_name.capitalize()}: {int(market_prices[crop_name])}", True, BLACK)
+        screen.blit(text, (button_rect.x + 10, button_rect.y + 10))
+    
+    if water_button_rect.collidepoint(mouse_pos):
+        screen.blit(button_square_beige_pressed, (water_button_rect.x, water_button_rect.y))
+    else:
+        if water_mode:
+            screen.blit(button_square_beige_pressed, (water_button_rect.x, water_button_rect.y))
+        else:
+            screen.blit(button_square_beige, (water_button_rect.x, water_button_rect.y))
+    water_text = font.render("Water (5)", True, BLACK)
+    screen.blit(water_text, (water_button_rect.x + 10, water_button_rect.y + 10))
+    
+    if remove_button_rect.collidepoint(mouse_pos):
+        screen.blit(button_square_beige_pressed, (remove_button_rect.x, remove_button_rect.y))
+    else:
+        if remove_mode:
+            screen.blit(button_square_beige_pressed, (remove_button_rect.x, remove_button_rect.y))
+        else:
+            screen.blit(button_square_beige, (remove_button_rect.x, remove_button_rect.y))
+    remove_text = font.render("Remove", True, BLACK)
+    screen.blit(remove_text, (remove_button_rect.x + 10, remove_button_rect.y + 10))
+    
+    if protect_button_rect.collidepoint(mouse_pos):
+        screen.blit(button_square_beige_pressed, (protect_button_rect.x, protect_button_rect.y))
+    else:
+        if protect_mode:
+            screen.blit(button_square_beige_pressed, (protect_button_rect.x, protect_button_rect.y))
+        else:
+            screen.blit(button_square_beige, (protect_button_rect.x, protect_button_rect.y))
+    protect_text = font.render("Protect (10)", True, BLACK)
+    screen.blit(protect_text, (protect_button_rect.x + 10, protect_button_rect.y + 10))
+    
+    if disrupt_button_rect.collidepoint(mouse_pos):
+        screen.blit(button_square_beige_pressed, (disrupt_button_rect.x, disrupt_button_rect.y))
+    else:
+        if disrupt_mode:
+            screen.blit(button_square_beige_pressed, (disrupt_button_rect.x, disrupt_button_rect.y))
+        else:
+            screen.blit(button_square_beige, (disrupt_button_rect.x, disrupt_button_rect.y))
+    disrupt_text = font.render("Disrupt (20)", True, BLACK)
+    screen.blit(disrupt_text, (disrupt_button_rect.x + 10, disrupt_button_rect.y + 10))
+    
+    if finish_button_rect.collidepoint(mouse_pos):
+        screen.blit(button_square_beige_pressed, (finish_button_rect.x, finish_button_rect.y))
+    else:
+        screen.blit(button_square_beige, (finish_button_rect.x, finish_button_rect.y))
+    finish_text = font.render("Finish", True, BLACK)
+    screen.blit(finish_text, (finish_button_rect.x + 20, finish_button_rect.y + 10))
+    
+    current_time = pygame.time.get_ticks()
+    bot_messages[:] = [msg for msg in bot_messages if current_time - msg[1] < BOT_MESSAGE_DURATION]
+    for i, (message, _) in enumerate(bot_messages[-3:]):
+        text = font.render(message, True, BLACK)
+        screen.blit(text, (50, 50 + i * 30))
 
 def draw_menu():
     print("Drawing menu screen...")
@@ -371,18 +573,18 @@ def draw_guide():
     
     guide_lines = [
         "Farm Frenzy Guide",
-        "1. Click on a grid cell to select it.",
-        "2. Choose a crop to plant: Rice (10 cost, 2 days, 25 profit),",
-        "   Corn (15 cost, 2 days, 35 profit), Tomato (20 cost, 4 days, 50 profit).",
-        f"3. You have {budget} budget and 10 days to maximize profit.",
-        "4. Each day lasts 11 seconds.",
-        "5. Weather affects crops: Sunny (Tomato +1 speed),",
-        "   Rainy (Rice +1 speed, Tomato 50% fail), Dry (Corn +1 speed, Rice 50% fail).",
-        "6. Harvest all crop types for a +20 profit bonus.",
-        "7. You can remove planted crops to get a refund.",
-        "8. Compete against a bot (Backtracking, DP, or Greedy).",
-        "9. Bot's actions are shown every 10 seconds.",
-        "10. Click Finish to end early and see results."
+        "1. Click a cell to plant crops.",
+        "2. Crops: Rice (10, 2d, 25), Corn (15, 2d, 35),",
+        "   Tomato (20, 4d, 50), Wheat (12, 3d, 40).",
+        f"3. Budget: {budget}, {MAX_DAYS} days to maximize profit.",
+        "4. Each day lasts 8 seconds.",
+        "5. Weather: Sunny (Tomato +1), Rainy (Rice +1, Tomato 50% fail),",
+        "   Dry (Corn +1, Rice 50% fail).",
+        "6. Diversity bonus: +30 profit for all 4 crops.",
+        "7. Actions: Water (-1 day, 5), Protect (no fail, 10),",
+        "   Disrupt bot (+1 day, 20).",
+        "8. Compete with bot (Backtracking, DP, Greedy).",
+        "9. Click Finish to end early."
     ]
     for i, line in enumerate(guide_lines):
         text = font.render(line, True, BLACK)
@@ -396,163 +598,6 @@ def draw_guide():
     back_text = font.render("Back", True, BLACK)
     screen.blit(back_text, (back_button_rect.x + 20, back_button_rect.y + 10))
 
-def apply_weather_effects(grid, timers):
-    global profit, bot_profit, harvested_crops
-    for i in range(GRID_SIZE):
-        for j in range(GRID_SIZE):
-            if grid[i][j]:
-                crop = grid[i][j]
-                crop_data = CROPS[crop]
-                time_reduction = 0
-                fail_chance = 0
-                if current_weather == "Sunny" and crop == "tomato":
-                    time_reduction = 1
-                elif current_weather == "Rainy":
-                    if crop == "rice":
-                        time_reduction = 1
-                    elif crop == "tomato":
-                        fail_chance = 0.5
-                elif current_weather == "Dry":
-                    if crop == "corn":
-                        time_reduction = 1
-                    elif crop == "rice":
-                        fail_chance = 0.5
-                
-                # Apply crop failure
-                if fail_chance > 0 and random.random() < fail_chance:
-                    grid[i][j] = None
-                    timers[i][j] = 0
-                    message = f"{'Bot' if grid is bot_grid else 'Player'}'s {crop} at ({i}, {j}) failed due to {current_weather} weather!"
-                    print(message)
-                    bot_messages.append((message, pygame.time.get_ticks()))
-                    continue
-                
-                # Apply time reduction
-                if time_reduction > 0 and timers[i][j] > 0:
-                    timers[i][j] = max(1, timers[i][j] - time_reduction)  # Ensure timer doesn't go below 1
-
-def draw_grid(grid, timers, offset_x, hide_crops=False):
-    for i in range(GRID_SIZE):
-        for j in range(GRID_SIZE):
-            cell_rect = pygame.Rect(
-                offset_x + j * CELL_SIZE,
-                GRID_OFFSET_Y + i * CELL_SIZE,
-                CELL_SIZE,
-                CELL_SIZE
-            )
-            screen.blit(soil_tile, (cell_rect.x, cell_rect.y))
-            if grid[i][j]:
-                if hide_crops:
-                    pygame.draw.rect(screen, GRAY, cell_rect)
-                else:
-                    crop_data = CROPS[grid[i][j]]
-                    screen.blit(crop_data["sprite"], (cell_rect.x + 5, cell_rect.y + 5))
-                    if timers[i][j] > 0:
-                        timer_text = font.render(str(timers[i][j]), True, BLACK)
-                        screen.blit(timer_text, (cell_rect.x + 15, cell_rect.y + 15))
-
-# Ở phần khai báo biến toàn cục (gần đầu file test.py)
-# Các khai báo khác như WIDTH, HEIGHT, GRID_OFFSET_X, v.v. đã có sẵn
-finish_button_rect = pygame.Rect(WIDTH - 150, HEIGHT - 210, 100, 50)  # Đã sửa trước đó
-weather_rect = pygame.Rect((50 + 700) // 2 - 80, 360, 160, 40)  # Thêm khai báo weather_rect: căn giữa và dưới bản đồ
-
-# Hàm draw_play() đã được sửa
-def draw_play():
-    print("Drawing play screen...")
-    if background_img:
-        screen.blit(background_img, (0, 0))
-    else:
-        screen.fill(GREEN)
-    
-    # Draw farms
-    draw_grid(farm_grid, crop_timers, GRID_OFFSET_X, hide_crops=False)
-    draw_grid(bot_grid, bot_timers, BOT_GRID_OFFSET_X, hide_crops=False)
-    
-    # Farm labels
-    player_label = font.render("Your Farm", True, BLACK)
-    bot_label = font.render(f"Bot ({selected_bot.capitalize()})", True, BLACK)
-    screen.blit(player_label, (GRID_OFFSET_X, GRID_OFFSET_Y - 30))
-    screen.blit(bot_label, (BOT_GRID_OFFSET_X, GRID_OFFSET_Y - 30))
-    
-    # Calculate time
-    remaining_time = max(0, (DAY_DURATION - day_timer) // 1000)
-    minutes = remaining_time // 60
-    seconds = remaining_time % 60
-    timer_display = f"Time: {minutes:02d}:{seconds:02d}"
-    
-    # Day and Time (Top-right)
-    day_rect = pygame.Rect(WIDTH - 180, 20, 160, 60)
-    screen.blit(stats_panel, (day_rect.x, day_rect.y), (0, 0, 160, 60))
-    day_text = font.render(f"Day: {day}/{MAX_DAYS}", True, BLACK)
-    time_text = font.render(timer_display, True, BLACK)
-    screen.blit(day_text, (day_rect.x + 10, day_rect.y + 10))
-    screen.blit(time_text, (day_rect.x + 10, day_rect.y + 35))
-    
-    # Budget, Profit, High Score, Bot Profit (Bottom-right)
-    stats_rect = pygame.Rect(WIDTH - 180, HEIGHT - 150, 160, 120)
-    screen.blit(stats_panel, (stats_rect.x, stats_rect.y), (0, 0, 160, 120))
-    budget_text = font.render(f"Budget: {budget}", True, BLACK)
-    profit_text = font.render(f"Profit: {profit}", True, BLACK)
-    high_score_text = font.render(f"High Score: {high_score}", True, BLACK)
-    bot_profit_text = font.render(f"Bot Profit: {'???' if day <= MAX_DAYS else bot_profit}", True, BLACK)
-    screen.blit(budget_text, (stats_rect.x + 10, stats_rect.y + 10))
-    screen.blit(profit_text, (stats_rect.x + 10, stats_rect.y + 35))
-    screen.blit(high_score_text, (stats_rect.x + 10, stats_rect.y + 60))
-    screen.blit(bot_profit_text, (stats_rect.x + 10, stats_rect.y + 85))
-    
-    # Weather (Now using global weather_rect, positioned below and centered)
-    screen.blit(stats_panel, (weather_rect.x, weather_rect.y), (0, 0, 160, 40))
-    weather_text = font.render(f"Weather: {current_weather}", True, BLACK)
-    # Căn giữa văn bản trong khung
-    text_rect = weather_text.get_rect(center=(weather_rect.x + weather_rect.width // 2, weather_rect.y + weather_rect.height // 2))
-    screen.blit(weather_text, text_rect)
-    
-    # Diversity (Bottom-left, near "Your Farm")
-    diversity_rect = pygame.Rect(50, HEIGHT - 100, 160, 30)
-    screen.blit(stats_panel, (diversity_rect.x, diversity_rect.y), (0, 0, 160, 30))
-    diversity_text = font.render(f"Diversity: {len(harvested_crops)}/3", True, BLACK)
-    screen.blit(diversity_text, (diversity_rect.x + 10, diversity_rect.y + 5))
-    
-    # Crop buttons
-    mouse_pos = pygame.mouse.get_pos()
-    for idx, (crop_name, _) in enumerate(CROPS.items()):
-        button_rect = pygame.Rect(50 + idx * 120, 20, 100, 50)
-        if button_rect.collidepoint(mouse_pos):
-            screen.blit(button_square_beige_pressed, (button_rect.x, button_rect.y))
-        else:
-            if selected_crop == crop_name and not remove_mode:
-                screen.blit(button_square_beige_pressed, (button_rect.x, button_rect.y))
-            else:
-                screen.blit(button_square_beige, (button_rect.x, button_rect.y))
-        text = font.render(crop_name.capitalize(), True, BLACK)
-        screen.blit(text, (button_rect.x + 10, button_rect.y + 10))
-    
-    # Remove button
-    if remove_button_rect.collidepoint(mouse_pos):
-        screen.blit(button_square_beige_pressed, (remove_button_rect.x, remove_button_rect.y))
-    else:
-        if remove_mode:
-            screen.blit(button_square_beige_pressed, (remove_button_rect.x, remove_button_rect.y))
-        else:
-            screen.blit(button_square_beige, (remove_button_rect.x, remove_button_rect.y))
-    remove_text = font.render("Remove", True, BLACK)
-    screen.blit(remove_text, (remove_button_rect.x + 10, remove_button_rect.y + 10))
-    
-    # Finish button
-    if finish_button_rect.collidepoint(mouse_pos):
-        screen.blit(button_square_beige_pressed, (finish_button_rect.x, finish_button_rect.y))
-    else:
-        screen.blit(button_square_beige, (finish_button_rect.x, finish_button_rect.y))
-    finish_text = font.render("Finish", True, BLACK)
-    screen.blit(finish_text, (finish_button_rect.x + 20, finish_button_rect.y + 10))
-    
-    # Bot messages
-    current_time = pygame.time.get_ticks()
-    bot_messages[:] = [msg for msg in bot_messages if current_time - msg[1] < BOT_MESSAGE_DURATION]
-    for i, (message, _) in enumerate(bot_messages[-3:]):
-        text = font.render(message, True, BLACK)
-        screen.blit(text, (50, HEIGHT - 150 + i * 30))
-
 def draw_game_over():
     print("Drawing game over screen...")
     if background_img:
@@ -560,18 +605,15 @@ def draw_game_over():
     else:
         screen.fill(GREEN)
 
-    # Game Over panel
     panel_rect = pygame.Rect(WIDTH // 2 - 150, HEIGHT // 2 - 100, 300, 200)
     screen.blit(stats_panel, (panel_rect.x, panel_rect.y), (0, 0, 300, 200))
 
-    # Game Over text
     game_over_text = font.render("Game Over!", True, BLACK)
     profit_text = font.render(f"Your Profit: {profit}", True, BLACK)
     high_score_text = font.render(f"Your High Score: {high_score}", True, BLACK)
     bot_profit_text = font.render(f"Bot Profit: {bot_profit}", True, BLACK)
     bot_plan_text = font.render(f"Bot Plan: {selected_bot.capitalize()}", True, BLACK)
 
-    # Thêm thông báo thắng/thua
     if profit > bot_profit:
         result_text = font.render("You Win!", True, BLACK)
     elif profit < bot_profit:
@@ -579,13 +621,57 @@ def draw_game_over():
     else:
         result_text = font.render("It's a Tie!", True, BLACK)
 
-    # Vị trí các dòng văn bản
     screen.blit(game_over_text, (panel_rect.x + 90, panel_rect.y + 20))
     screen.blit(profit_text, (panel_rect.x + 20, panel_rect.y + 50))
     screen.blit(high_score_text, (panel_rect.x + 20, panel_rect.y + 80))
     screen.blit(bot_profit_text, (panel_rect.x + 20, panel_rect.y + 110))
     screen.blit(bot_plan_text, (panel_rect.x + 20, panel_rect.y + 140))
-    screen.blit(result_text, (panel_rect.x + 90, panel_rect.y + 170))  # Thêm dòng kết quả
+    screen.blit(result_text, (panel_rect.x + 90, panel_rect.y + 170))
+
+    mouse_pos = pygame.mouse.get_pos()
+    if back_to_menu_button_rect.collidepoint(mouse_pos):
+        screen.blit(button_square_beige_pressed, (back_to_menu_button_rect.x, back_to_menu_button_rect.y))
+    else:
+        screen.blit(button_square_beige, (back_to_menu_button_rect.x, back_to_menu_button_rect.y))
+    back_to_menu_text = font.render("Back to Menu", True, BLACK)
+    screen.blit(back_to_menu_text, (back_to_menu_button_rect.x + 5, back_to_menu_button_rect.y + 10))
+
+    if view_plans_button_rect.collidepoint(mouse_pos):
+        screen.blit(button_square_beige_pressed, (view_plans_button_rect.x, view_plans_button_rect.y))
+    else:
+        screen.blit(button_square_beige, (view_plans_button_rect.x, view_plans_button_rect.y))
+    view_plans_text = font.render("View Plans", True, BLACK)
+    screen.blit(view_plans_text, (view_plans_button_rect.x + 10, view_plans_button_rect.y + 10))
+
+def draw_view_plans():
+    print("Drawing view plans screen...")
+    if background_img:
+        screen.blit(background_img, (0, 0))
+    else:
+        screen.fill(GREEN)
+
+    panel_rect = pygame.Rect(50, 50, 700, 500)
+    screen.blit(panel_beige, (panel_rect.x, panel_rect.y))
+
+    player_plan_text = font.render("Your Plan:", True, BLACK)
+    screen.blit(player_plan_text, (panel_rect.x + 20, panel_rect.y + 20))
+    for i, action in enumerate(player_plan):
+        action_text = font.render(f"Step {i+1}: {action[1]} at {action[0]} {'with ' + action[2] if action[1] == 'plant' else ''}", True, BLACK)
+        screen.blit(action_text, (panel_rect.x + 40, panel_rect.y + 60 + i * 40))
+
+    bot_plan_text = font.render(f"Bot ({selected_bot.capitalize()}) Plan:", True, BLACK)
+    screen.blit(bot_plan_text, (panel_rect.x + 20, panel_rect.y + 160))
+    for i, action in enumerate(bot_plan_steps):
+        action_text = font.render(f"Step {i+1}: {action[1]} at {action[0]} {'with ' + action[2] if action[1] == 'plant' else ''}", True, BLACK)
+        screen.blit(action_text, (panel_rect.x + 40, panel_rect.y + 200 + i * 40))
+
+    mouse_pos = pygame.mouse.get_pos()
+    if back_button_rect.collidepoint(mouse_pos):
+        screen.blit(button_square_beige_pressed, (back_button_rect.x, back_button_rect.y))
+    else:
+        screen.blit(button_square_beige, (back_button_rect.x, back_button_rect.y))
+    back_text = font.render("Back", True, BLACK)
+    screen.blit(back_text, (back_button_rect.x + 20, back_button_rect.y + 10))
 
 def update_bot():
     global bot_step_index, last_bot_action, bot_profit
@@ -601,7 +687,6 @@ def update_bot():
             return
         
         position = step[0]
-        print(f"Position: {position}")
         action = step[1]
         
         if not isinstance(position, (list, tuple)) or len(position) < 2:
@@ -626,26 +711,48 @@ def update_bot():
             bot_grid[i][j] = crop
             bot_timers[i][j] = CROPS[crop]["time"]
             message = f"Bot planted {crop} at ({i}, {j})"
-            print(message)
             bot_messages.append((message, current_time))
+            # Thêm animation giả lập
+            pygame.draw.rect(screen, YELLOW, (BOT_GRID_OFFSET_X + j * CELL_SIZE, GRID_OFFSET_Y + i * CELL_SIZE, CELL_SIZE, CELL_SIZE), 2)
+            pygame.display.flip()
+            pygame.time.wait(200)
         elif action == "harvest" and bot_grid[i][j] is not None:
             crop = bot_grid[i][j]
-            bot_profit += CROPS[crop]["profit"]
+            bot_profit += market_prices[crop]
             bot_grid[i][j] = None
             bot_timers[i][j] = 0
-            harvested_crops.add(crop)  # Track harvested crop type
+            harvested_crops.add(crop)
             message = f"Bot harvested at ({i}, {j}), profit now: {bot_profit}"
-            print(message)
             bot_messages.append((message, current_time))
+            # Thêm animation giả lập
+            pygame.draw.rect(screen, GREEN, (BOT_GRID_OFFSET_X + j * CELL_SIZE, GRID_OFFSET_Y + i * CELL_SIZE, CELL_SIZE, CELL_SIZE), 2)
+            pygame.display.flip()
+            pygame.time.wait(200)
         
         bot_step_index += 1
         last_bot_action = current_time
 
+def update_level():
+    global level, xp, DAY_DURATION
+    xp_to_level = level * 50
+    if xp >= xp_to_level:
+        level += 1
+        DAY_DURATION = max(5000, DAY_DURATION - 500)
+        message = f"Level Up! You are now level {level}. Days are faster!"
+        bot_messages.append((message, pygame.time.get_ticks()))
+        print(message)
+
+def update_market_prices():
+    global market_prices
+    for crop in market_prices:
+        fluctuation = random.uniform(-0.3, 0.3)
+        market_prices[crop] = max(0.5 * original_profits[crop], original_profits[crop] * (1 + fluctuation))
+
 def main():
     global game_state, budget, day, profit, selected_crop, username, high_score
-    global username_input, username_input_active, day_timer, last_day_update, remove_mode
-    global farm_grid, crop_timers, bot_profit, bot_grid, bot_timers, bot_step_index, last_bot_action
-    global current_weather, harvested_crops
+    global username_input, username_input_active, day_timer, last_day_update, remove_mode, water_mode, protect_mode, disrupt_mode
+    global farm_grid, crop_timers, crop_protected, bot_profit, bot_grid, bot_timers, bot_step_index, last_bot_action
+    global current_weather, next_weather, harvested_crops, player_plan, xp, last_disrupt_time
     
     load_high_scores()
     reset_game()
@@ -682,24 +789,76 @@ def main():
                         if button_rect.collidepoint(mouse_pos):
                             selected_crop = crop_name
                             remove_mode = False
+                            water_mode = False
+                            protect_mode = False
+                            disrupt_mode = False
                             print(f"Selected crop: {selected_crop}")
                             break
                     
+                    if water_button_rect.collidepoint(mouse_pos):
+                        water_mode = not water_mode
+                        remove_mode = False
+                        protect_mode = False
+                        disrupt_mode = False
+                        selected_crop = None
+                        if water_mode:
+                            print("Water mode activated")
+                        else:
+                            print("Water mode deactivated")
+                        continue
+                    
                     if remove_button_rect.collidepoint(mouse_pos):
                         remove_mode = not remove_mode
+                        water_mode = False
+                        protect_mode = False
+                        disrupt_mode = False
+                        selected_crop = None
                         if remove_mode:
-                            selected_crop = None
                             print("Remove mode activated")
                         else:
                             print("Remove mode deactivated")
                         continue
                     
+                    if protect_button_rect.collidepoint(mouse_pos):
+                        protect_mode = not protect_mode
+                        remove_mode = False
+                        water_mode = False
+                        disrupt_mode = False
+                        selected_crop = None
+                        if protect_mode:
+                            print("Protect mode activated")
+                        else:
+                            print("Protect mode deactivated")
+                        continue
+                    
+                    if disrupt_button_rect.collidepoint(mouse_pos):
+                        current_time = pygame.time.get_ticks()
+                        if current_time - last_disrupt_time >= DISRUPT_COOLDOWN:
+                            disrupt_mode = not disrupt_mode
+                            remove_mode = False
+                            water_mode = False
+                            protect_mode = False
+                            selected_crop = None
+                            if disrupt_mode:
+                                print("Disrupt mode activated")
+                            else:
+                                print("Disrupt mode deactivated")
+                            last_disrupt_time = current_time if disrupt_mode else 0
+                        else:
+                            message = f"Disrupt on cooldown! Wait {int((DISRUPT_COOLDOWN - (current_time - last_disrupt_time)) / 1000)}s"
+                            bot_messages.append((message, current_time))
+                        continue
+                    
                     if finish_button_rect.collidepoint(mouse_pos):
-                        # Apply diversity bonus if all crops harvested
                         if len(harvested_crops) == len(CROPS):
                             profit += DIVERSITY_BONUS
                             bot_profit += DIVERSITY_BONUS
-                            print(f"Diversity bonus applied! Player profit: {profit}, Bot profit: {bot_profit}")
+                            message = f"Diversity bonus applied! +{DIVERSITY_BONUS} profit!"
+                            bot_messages.append((message, pygame.time.get_ticks()))
+                            # Thêm hiệu ứng pop-up giả lập
+                            pygame.draw.rect(screen, YELLOW, (WIDTH // 2 - 100, HEIGHT // 2 - 25, 200, 50))
+                            pygame.display.flip()
+                            pygame.time.wait(500)
                         game_state = GAME_OVER
                         print("Player clicked Finish, game over")
                         if profit > high_score:
@@ -710,31 +869,54 @@ def main():
                     
                     for i in range(GRID_SIZE):
                         for j in range(GRID_SIZE):
-                            cell_rect = pygame.Rect(
-                                GRID_OFFSET_X + j * CELL_SIZE,
-                                GRID_OFFSET_Y + i * CELL_SIZE,
-                                CELL_SIZE,
-                                CELL_SIZE
-                            )
+                            cell_rect = pygame.Rect(GRID_OFFSET_X + j * CELL_SIZE, GRID_OFFSET_Y + i * CELL_SIZE, CELL_SIZE, CELL_SIZE)
                             if cell_rect.collidepoint(mouse_pos):
                                 if remove_mode and farm_grid[i][j] is not None:
                                     crop_data = CROPS[farm_grid[i][j]]
                                     budget += crop_data["cost"]
+                                    player_plan.append([[i, j], "remove", farm_grid[i][j]])
                                     farm_grid[i][j] = None
                                     crop_timers[i][j] = 0
+                                    crop_protected[i][j] = False
                                     print(f"Removed crop at ({i}, {j}), refunded {crop_data['cost']}")
+                                elif water_mode and farm_grid[i][j] is not None and budget >= 5:
+                                    budget -= 5
+                                    crop_timers[i][j] = max(1, crop_timers[i][j] - 1)
+                                    player_plan.append([[i, j], "water"])
+                                    print(f"Watered crop at ({i}, {j})")
+                                elif protect_mode and farm_grid[i][j] is not None and not crop_protected[i][j] and budget >= 10:
+                                    budget -= 10
+                                    crop_protected[i][j] = True
+                                    player_plan.append([[i, j], "protect"])
+                                    print(f"Protected crop at ({i}, {j})")
                                 elif selected_crop and farm_grid[i][j] is None:
                                     crop_data = CROPS[selected_crop]
                                     if budget >= crop_data["cost"]:
                                         budget -= crop_data["cost"]
                                         farm_grid[i][j] = selected_crop
                                         crop_timers[i][j] = crop_data["time"]
+                                        player_plan.append([[i, j], "plant", selected_crop])
                                         print(f"Planted {selected_crop} at ({i}, {j})")
+                            bot_cell_rect = pygame.Rect(BOT_GRID_OFFSET_X + j * CELL_SIZE, GRID_OFFSET_Y + i * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+                            if disrupt_mode and bot_cell_rect.collidepoint(mouse_pos) and bot_grid[i][j] is not None and budget >= 20:
+                                budget -= 20
+                                bot_timers[i][j] = min(10, bot_timers[i][j] + 1)  # Giới hạn timer tối đa 10
+                                player_plan.append([[i, j], "disrupt"])
+                                message = f"Player disrupted bot's crop at ({i}, {j})!"
+                                bot_messages.append((message, pygame.time.get_ticks()))
+                                print(message)
                 elif game_state == GAME_OVER:
-                    if play_again_button_rect.collidepoint(mouse_pos):
+                    if back_to_menu_button_rect.collidepoint(mouse_pos):
                         game_state = MENU
                         print("Switched to MENU state")
                         reset_game()
+                    elif view_plans_button_rect.collidepoint(mouse_pos):
+                        game_state = VIEW_PLANS
+                        print("Switched to VIEW_PLANS state")
+                elif game_state == VIEW_PLANS:
+                    if back_button_rect.collidepoint(mouse_pos):
+                        game_state = GAME_OVER
+                        print("Switched back to GAME_OVER state")
             if event.type == pygame.KEYDOWN:
                 if game_state == USERNAME_INPUT and username_input_active:
                     if event.key == pygame.K_RETURN and username_input.strip():
@@ -760,33 +942,43 @@ def main():
             update_bot()
             
             if day_timer >= DAY_DURATION:
-                # Update weather at the start of the day
-                current_weather = random.choice(WEATHER_TYPES)
-                print(f"Day {day}: Weather is {current_weather}")
+                current_weather = next_weather
+                next_weather = random.choice(WEATHER_TYPES)
+                print(f"Day {day}: Weather is {current_weather}, Tomorrow: {next_weather}")
                 
-                # Apply weather effects
-                apply_weather_effects(farm_grid, crop_timers)
-                apply_weather_effects(bot_grid, bot_timers)
+                update_market_prices()
+                print(f"Market prices updated: {market_prices}")
                 
-                # Update crop timers
+                apply_weather_effects(farm_grid, crop_timers, crop_protected)
+                apply_weather_effects(bot_grid, bot_timers, [[False for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)])
+                
                 for i in range(GRID_SIZE):
                     for j in range(GRID_SIZE):
                         if farm_grid[i][j] and crop_timers[i][j] > 0:
                             crop_timers[i][j] -= 1
                             if crop_timers[i][j] == 0:
                                 crop = farm_grid[i][j]
-                                profit += CROPS[crop]["profit"]
-                                harvested_crops.add(crop)  # Track harvested crop type
+                                profit += market_prices[crop]
+                                if crop not in harvested_crops:
+                                    budget += 5
+                                    message = f"New crop harvested! +5 budget!"
+                                    bot_messages.append((message, pygame.time.get_ticks()))
+                                harvested_crops.add(crop)
+                                player_plan.append([[i, j], "harvest"])
                                 farm_grid[i][j] = None
-                                print(f"Player harvested at ({i}, {j}), profit now: {profit}")
+                                crop_protected[i][j] = False
+                                xp += 10
+                                print(f"Player harvested at ({i}, {j}), profit now: {profit}, XP: {xp}")
                         if bot_grid[i][j] and bot_timers[i][j] > 0:
                             bot_timers[i][j] -= 1
                             if bot_timers[i][j] == 0:
                                 crop = bot_grid[i][j]
-                                bot_profit += CROPS[crop]["profit"]
-                                harvested_crops.add(crop)  # Track harvested crop type
+                                bot_profit += market_prices[crop]
+                                harvested_crops.add(crop)
                                 bot_grid[i][j] = None
                                 print(f"Bot harvested at ({i}, {j}), profit now: {bot_profit}")
+                
+                update_level()
                 
                 if day < MAX_DAYS:
                     day += 1
@@ -794,11 +986,11 @@ def main():
                     day_timer = 0
                     print(f"Day updated to: {day}")
                 else:
-                    # Apply diversity bonus if all crops harvested
                     if len(harvested_crops) == len(CROPS):
                         profit += DIVERSITY_BONUS
                         bot_profit += DIVERSITY_BONUS
-                        print(f"Diversity bonus applied! Player profit: {profit}, Bot profit: {bot_profit}")
+                        message = f"Diversity bonus applied! +{DIVERSITY_BONUS} profit!"
+                        bot_messages.append((message, pygame.time.get_ticks()))
                     if profit > high_score:
                         high_score = profit
                         high_scores[username]["high_score"] = high_score
@@ -817,6 +1009,8 @@ def main():
             draw_play()
         elif game_state == GAME_OVER:
             draw_game_over()
+        elif game_state == VIEW_PLANS:
+            draw_view_plans()
         
         pygame.display.flip()
         clock.tick(60)
