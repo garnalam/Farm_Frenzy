@@ -1,23 +1,24 @@
 import json
 import random
-import copy  # Thêm import copy để sử dụng deepcopy
+import copy
 from itertools import product
 from tqdm import tqdm
 import math
 
 # Game constants
 GRID_SIZE = 5
-DAYS = 7  # Giảm từ 10 xuống 5
+DAYS = 7
 BUDGETS = [150]
 DIVERSITY_BONUS = 20
 MAX_ACTIONS = 10
-NUM_WEATHER_SCENARIOS = 100  # Giảm từ 100 xuống 10
+NUM_WEATHER_SCENARIOS = 100
 
 # Crop data
 BASE_CROPS = {
     "rice": {"cost": 10, "time": 2, "profit": 25},
     "corn": {"cost": 15, "time": 2, "profit": 35},
     "tomato": {"cost": 20, "time": 4, "profit": 50},
+    "carrot": {"cost": 12, "time": 3, "profit": 40}  # Thêm carrot
 }
 
 WEATHER_TYPES = ["Sunny", "Rainy", "Dry"]
@@ -38,6 +39,9 @@ def apply_weather_effects(crop, weather, day, remaining_days):
     elif crop == "tomato":
         if weather == "Sunny": time_reduction = 1
         elif weather == "Rainy": fail_chance = 0.5
+    elif crop == "carrot":
+        if weather == "Sunny": time_reduction = 1  # Phát triển nhanh hơn trong "Sunny"
+        elif weather == "Dry": fail_chance = 0.5  # Dễ thất bại trong "Dry"
     effective_time = max(1, base_time - time_reduction)
     if remaining_days < effective_time: return 0, effective_time, fail_chance
     return effective_time, effective_time, fail_chance
@@ -52,6 +56,8 @@ def apply_crop_abilities(crop, grid, i, j, weather, day, weather_history, profit
         if day >= 2 and weather_history[day-1] == "Dry" and weather_history[day-2] == "Dry": bonus += 15
     elif crop == "tomato":
         if weather == "Sunny": bonus += 20
+    elif crop == "carrot":
+        if i == 0 or i == GRID_SIZE-1 or j == 0 or j == GRID_SIZE-1: bonus += 10  # Bonus 10 nếu ở cạnh ngoài
     return profit + bonus
 
 def apply_market_prices(crop, day, harvest_history):
@@ -76,6 +82,13 @@ def score_position(grid, i, j, crop, weather_scenarios, t):
         expected_harvest_day = t + BASE_CROPS[crop]["time"]
         if expected_harvest_day < DAYS and expected_harvest_day >= 2:
             score += (sum(1 for scenario in weather_scenarios if scenario[expected_harvest_day-1] == "Dry" and scenario[expected_harvest_day-2] == "Dry") / len(weather_scenarios)) * 15
+    elif crop == "carrot":
+        # Ưu tiên vị trí gần cạnh để tối ưu bonus
+        edge_distance = min(i, GRID_SIZE-1-i, j, GRID_SIZE-1-j)
+        score += (GRID_SIZE - edge_distance) * 5  # Tăng điểm nếu gần cạnh
+        expected_harvest_day = t + BASE_CROPS[crop]["time"]
+        if expected_harvest_day < DAYS:
+            score += (sum(1 for scenario in weather_scenarios if scenario[expected_harvest_day] == "Sunny") / len(weather_scenarios)) * 10  # Ưu tiên "Sunny"
     min_dist = min((math.sqrt((i - pi)**2 + (j - pj)**2) for pi in range(GRID_SIZE) for pj in range(GRID_SIZE) if grid[pi][pj] is not None), default=float('inf'))
     score += min_dist
     return score
@@ -122,7 +135,7 @@ def estimate_upper_bound(t, grid, harvested_crops, remaining_budget, scenario):
         for i in range(GRID_SIZE):
             for j in range(GRID_SIZE):
                 if temp_grid[i][j]:
-                    if weather in [("Sunny", "tomato"), ("Rainy", "rice"), ("Dry", "corn")][{"Sunny": 0, "Rainy": 1, "Dry": 2}[weather] % 3]:
+                    if weather in [("Sunny", "tomato"), ("Rainy", "rice"), ("Dry", "corn"), ("Sunny", "carrot")][{"Sunny": 0, "Rainy": 1, "Dry": 2, "Sunny": 3}[weather] % 4]:
                         temp_timers[i][j] -= 1
                     temp_timers[i][j] = max(0, temp_timers[i][j] - 1)
                     if temp_timers[i][j] <= 0:

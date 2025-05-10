@@ -7,13 +7,13 @@ import random
 pygame.init()
 
 # Screen dimensions
-WIDTH = 1200  # Tăng chiều rộng
-HEIGHT = 800  # Tăng chiều cao
+WIDTH = 1200
+HEIGHT = 800
 GRID_SIZE = 5
 CELL_SIZE = 50
 GRID_OFFSET_X = 50
 GRID_OFFSET_Y = 100
-BOT_GRID_OFFSET_X = WIDTH // 2 + 100  # Điều chỉnh vị trí lưới bot
+BOT_GRID_OFFSET_X = WIDTH // 2 + 100
 
 # Colors
 WHITE = (255, 255, 255)
@@ -127,8 +127,6 @@ profit = 0
 DAY_DURATION = 8 * 1000
 day_timer = 0
 last_day_update = 0
-xp = 0
-level = 1
 
 # Bot stats
 bot_profit = 0
@@ -158,10 +156,10 @@ harvested_crops = set()
 DIVERSITY_BONUS = 30
 
 # Market prices
-market_prices = {"rice": 25, "corn": 35, "tomato": 50, "wheat": 40}
-original_profits = {"rice": 25, "corn": 35, "tomato": 50, "wheat": 40}
+market_prices = {"rice": 25, "corn": 35, "tomato": 50, "carrot": 40}
+original_profits = {"rice": 25, "corn": 35, "tomato": 50, "carrot": 40}
 
-# Crops data (Thêm hình ảnh rau củ từ mã cũ)
+# Crops data
 CROPS = {
     "rice": {
         "cost": 10,
@@ -184,11 +182,11 @@ CROPS = {
         "sprite": pygame.transform.scale(pygame.image.load(os.path.join("Tiles", "tile_0057.png")), (CELL_SIZE - 10, CELL_SIZE - 10)),
         "color": RED
     },
-    "wheat": {
+    "carrot": {
         "cost": 12,
         "time": 3,
         "profit": 40,
-        "sprite": pygame.transform.scale(pygame.image.load(os.path.join("Tiles", "tile_0056.png")), (CELL_SIZE - 10, CELL_SIZE - 10)),  # Giả định, thay bằng file thực tế
+        "sprite": pygame.transform.scale(pygame.image.load(os.path.join("Tiles", "tile_0056.png")), (CELL_SIZE - 10, CELL_SIZE - 10)),
         "color": BROWN
     },
 }
@@ -198,7 +196,7 @@ farm_grid = [[None for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
 crop_timers = [[0 for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
 crop_protected = [[False for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
 
-# Buttons (Điều chỉnh vị trí các nút xuống dưới lưới farm)
+# Buttons
 play_button_rect = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 - 50, 200, 50)
 guide_button_rect = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 + 20, 200, 50)
 back_button_rect = pygame.Rect(50, HEIGHT - 70, 100, 50)
@@ -289,7 +287,7 @@ def reset_game():
     global username, high_score, budget, day, profit, day_timer, last_day_update
     global farm_grid, crop_timers, crop_protected, selected_crop, remove_mode, water_mode, protect_mode, disrupt_mode
     global bot_profit, bot_grid, bot_timers, bot_step_index, last_bot_action, previous_config, bot_messages
-    global current_weather, next_weather, harvested_crops, player_plan, market_prices, xp, last_disrupt_time
+    global current_weather, next_weather, harvested_crops, player_plan, market_prices, last_disrupt_time
     username = ""
     high_score = 0
     budget = 150
@@ -316,7 +314,6 @@ def reset_game():
     harvested_crops = set()
     player_plan = []
     market_prices = original_profits.copy()
-    xp = 0
     last_disrupt_time = 0
     previous_config = selected_config
     setup()
@@ -406,12 +403,8 @@ def draw_play():
     screen.blit(stats_panel, (day_rect.x, day_rect.y), (0, 0, 160, 100))
     day_text = font.render(f"Day: {day}/{MAX_DAYS}", True, BLACK)
     time_text = font.render(timer_display, True, BLACK)
-    level_text = font.render(f"Level: {level}", True, BLACK)
-    xp_text = font.render(f"XP: {xp}", True, BLACK)
     screen.blit(day_text, (day_rect.x + 10, day_rect.y + 10))
     screen.blit(time_text, (day_rect.x + 10, day_rect.y + 35))
-    screen.blit(level_text, (day_rect.x + 10, day_rect.y + 60))
-    screen.blit(xp_text, (day_rect.x + 10, day_rect.y + 85))
     
     stats_rect = pygame.Rect(WIDTH - 180, HEIGHT - 150, 160, 120)
     screen.blit(stats_panel, (stats_rect.x, stats_rect.y), (0, 0, 160, 120))
@@ -599,7 +592,7 @@ def draw_guide():
         "Farm Frenzy Guide",
         "1. Click a cell to plant crops.",
         "2. Crops: Rice (10, 2d, 25), Corn (15, 2d, 35),",
-        "   Tomato (20, 4d, 50), Wheat (12, 3d, 40).",
+        "   Tomato (20, 4d, 50), Carrot (12, 3d, 40).",
         f"3. Budget: {budget}, {MAX_DAYS} days to maximize profit.",
         "4. Each day lasts 8 seconds.",
         "5. Weather: Sunny (Tomato +1), Rainy (Rice +1, Tomato 50% fail),",
@@ -754,16 +747,6 @@ def update_bot():
         bot_step_index += 1
         last_bot_action = current_time
 
-def update_level():
-    global level, xp, DAY_DURATION
-    xp_to_level = level * 50
-    if xp >= xp_to_level:
-        level += 1
-        DAY_DURATION = max(5000, DAY_DURATION - 500)
-        message = f"Level Up! You are now level {level}. Days are faster!"
-        bot_messages.append((message, pygame.time.get_ticks()))
-        print(message)
-
 def update_market_prices():
     global market_prices
     for crop in market_prices:
@@ -774,7 +757,7 @@ def main():
     global game_state, budget, day, profit, selected_crop, username, high_score
     global username_input, username_input_active, day_timer, last_day_update, remove_mode, water_mode, protect_mode, disrupt_mode
     global farm_grid, crop_timers, crop_protected, bot_profit, bot_grid, bot_timers, bot_step_index, last_bot_action
-    global current_weather, next_weather, harvested_crops, player_plan, xp, last_disrupt_time
+    global current_weather, next_weather, harvested_crops, player_plan, last_disrupt_time
     
     load_high_scores()
     reset_game()
@@ -988,8 +971,7 @@ def main():
                                 player_plan.append([[i, j], "harvest"])
                                 farm_grid[i][j] = None
                                 crop_protected[i][j] = False
-                                xp += 10
-                                print(f"Player harvested at ({i}, {j}), profit now: {profit}, XP: {xp}")
+                                print(f"Player harvested at ({i}, {j}), profit now: {profit}")
                         if bot_grid[i][j] and bot_timers[i][j] > 0:
                             bot_timers[i][j] -= 1
                             if bot_timers[i][j] == 0:
@@ -998,8 +980,6 @@ def main():
                                 harvested_crops.add(crop)
                                 bot_grid[i][j] = None
                                 print(f"Bot harvested at ({i}, {j}), profit now: {bot_profit}")
-                
-                update_level()
                 
                 if day < MAX_DAYS:
                     day += 1

@@ -6,14 +6,14 @@
                 [
                     [
                         4,
-                        2
+                        3
                     ],
                     "plant",
                     "rice"
                 ],
                 [
                     [
-                        4,
+                        2,
                         1
                     ],
                     "plant",
@@ -21,11 +21,19 @@
                 ],
                 [
                     [
-                        2,
-                        0
+                        3,
+                        4
                     ],
                     "plant",
                     "tomato"
+                ],
+                [
+                    [
+                        3,
+                        1
+                    ],
+                    "plant",
+                    "carrot"
                 ],
                 [
                     [
@@ -38,14 +46,22 @@
                 [
                     [
                         0,
-                        1
+                        0
                     ],
                     "plant",
                     "corn"
                 ],
                 [
                     [
-                        2,
+                        0,
+                        2
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        1,
                         3
                     ],
                     "plant",
@@ -54,15 +70,7 @@
                 [
                     [
                         4,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        1,
-                        2
+                        0
                     ],
                     "plant",
                     "corn"
@@ -70,7 +78,7 @@
                 [
                     [
                         0,
-                        0
+                        1
                     ],
                     "plant",
                     "corn"
@@ -131,435 +139,7 @@
                         0
                     ],
                     "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ]
-            ],
-            "dp": [
-                [
-                    [
-                        4,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        3,
-                        2
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        1,
-                        2
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        2,
-                        1
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        2,
-                        1
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        3,
-                        2
-                    ],
-                    "harvest"
-                ],
-                [
-                    [
-                        4,
-                        0
-                    ],
-                    "harvest"
-                ],
-                [
-                    [
-                        3,
-                        1
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        3,
-                        2
-                    ],
-                    "harvest"
-                ],
-                [
-                    [
-                        4,
-                        0
-                    ],
-                    "harvest"
-                ]
-            ]
-        },
-        "ai_profits": {
-            "greedy": 374.7847035905727,
-            "backtracking": 64.55840441675299,
-            "dp": 359.28555484441097
-        }
-    },
-    {
-        "budget": 150,
-        "ai_plans": {
-            "greedy": [
-                [
-                    [
-                        4,
-                        3
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        3,
-                        1
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        2,
-                        1
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        2
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        2,
-                        3
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        3,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        4,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ]
-            ],
-            "backtracking": [
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ]
-            ],
-            "dp": [
-                [
-                    [
-                        2,
-                        4
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        3,
-                        3
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        2,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        1,
-                        2
-                    ],
-                    "plant",
-                    "rice"
-                ]
-            ]
-        },
-        "ai_profits": {
-            "greedy": 374.23548779854747,
-            "backtracking": 63.00648676799713,
-            "dp": 339.7324563830174
-        }
-    },
-    {
-        "budget": 150,
-        "ai_plans": {
-            "greedy": [
-                [
-                    [
-                        3,
-                        1
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        1,
-                        1
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        2,
-                        4
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        3
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        4,
-                        3
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        2,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        2,
-                        2
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        4,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ]
-            ],
-            "backtracking": [
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
+                    "carrot"
                 ],
                 [
                     [
@@ -615,23 +195,7 @@
                         0
                     ],
                     "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
+                    "carrot"
                 ],
                 [
                     [
@@ -655,491 +219,7 @@
                         0
                     ],
                     "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ]
-            ],
-            "dp": [
-                [
-                    [
-                        1,
-                        1
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        4,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        4
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        3,
-                        3
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        3,
-                        3
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        1,
-                        1
-                    ],
-                    "harvest"
-                ],
-                [
-                    [
-                        4,
-                        0
-                    ],
-                    "harvest"
-                ],
-                [
-                    [
-                        4,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ]
-            ]
-        },
-        "ai_profits": {
-            "greedy": 375.24328686217615,
-            "backtracking": 60.94819091710465,
-            "dp": 347.3040332094115
-        }
-    },
-    {
-        "budget": 150,
-        "ai_plans": {
-            "greedy": [
-                [
-                    [
-                        3,
-                        2
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        4,
-                        3
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        1,
-                        3
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        4,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        2,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        2
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        1,
-                        1
-                    ],
-                    "plant",
-                    "corn"
-                ]
-            ],
-            "backtracking": [
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ]
-            ],
-            "dp": [
-                [
-                    [
-                        2,
-                        4
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        4,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        1,
-                        4
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        1,
-                        1
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        1,
-                        1
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        2,
-                        4
-                    ],
-                    "harvest"
-                ],
-                [
-                    [
-                        4,
-                        0
-                    ],
-                    "harvest"
-                ],
-                [
-                    [
-                        4,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ]
-            ]
-        },
-        "ai_profits": {
-            "greedy": 378.77173557026765,
-            "backtracking": 61.211463287015,
-            "dp": 341.6338681653895
-        }
-    },
-    {
-        "budget": 150,
-        "ai_plans": {
-            "greedy": [
-                [
-                    [
-                        3,
-                        1
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        2,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        3,
-                        4
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        3
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        1,
-                        1
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        2,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        2,
-                        2
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        4,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ]
-            ],
-            "backtracking": [
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
+                    "carrot"
                 ],
                 [
                     [
@@ -1162,18 +242,26 @@
                 [
                     [
                         3,
-                        1
+                        4
                     ],
                     "plant",
                     "rice"
                 ],
                 [
                     [
-                        0,
-                        3
+                        4,
+                        4
                     ],
                     "plant",
                     "corn"
+                ],
+                [
+                    [
+                        4,
+                        0
+                    ],
+                    "plant",
+                    "tomato"
                 ],
                 [
                     [
@@ -1181,523 +269,7 @@
                         0
                     ],
                     "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        2,
-                        3
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        4,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ]
-            ]
-        },
-        "ai_profits": {
-            "greedy": 377.59053455597723,
-            "backtracking": 62.031473716585225,
-            "dp": 360.76542763943945
-        }
-    },
-    {
-        "budget": 150,
-        "ai_plans": {
-            "greedy": [
-                [
-                    [
-                        2,
-                        2
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        2
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        4,
-                        2
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        1,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        1,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        3,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        3,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        1
-                    ],
-                    "plant",
-                    "corn"
-                ]
-            ],
-            "backtracking": [
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ]
-            ],
-            "dp": [
-                [
-                    [
-                        0,
-                        4
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        2
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        3,
-                        4
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        3,
-                        1
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        4,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ]
-            ]
-        },
-        "ai_profits": {
-            "greedy": 377.8236211982203,
-            "backtracking": 60.95384979726143,
-            "dp": 365.4194167219977
-        }
-    },
-    {
-        "budget": 150,
-        "ai_plans": {
-            "greedy": [
-                [
-                    [
-                        3,
-                        3
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        4,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        1,
-                        4
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        4,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        2,
-                        1
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        2
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        4,
-                        2
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        1
-                    ],
-                    "plant",
-                    "corn"
-                ]
-            ],
-            "backtracking": [
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ]
-            ],
-            "dp": [
-                [
-                    [
-                        2,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        1,
-                        3
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        3,
-                        2
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        4,
-                        4
-                    ],
-                    "plant",
-                    "tomato"
-                ]
-            ]
-        },
-        "ai_profits": {
-            "greedy": 377.3156180760304,
-            "backtracking": 64.28582083771818,
-            "dp": 364.3721585641376
-        }
-    },
-    {
-        "budget": 150,
-        "ai_plans": {
-            "greedy": [
-                [
-                    [
-                        3,
-                        1
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        4,
-                        3
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        3,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
+                    "carrot"
                 ],
                 [
                     [
@@ -1705,176 +277,27 @@
                         2
                     ],
                     "plant",
-                    "corn"
+                    "rice"
                 ],
                 [
                     [
-                        2,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        1
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
+                        1,
                         2
                     ],
                     "plant",
-                    "corn"
-                ]
-            ],
-            "backtracking": [
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
                     "rice"
                 ],
                 [
                     [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ]
-            ],
-            "dp": [
-                [
-                    [
-                        1,
-                        3
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        3
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        1,
+                        3,
                         4
                     ],
-                    "plant",
-                    "tomato"
+                    "harvest"
                 ],
                 [
                     [
-                        3,
-                        1
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        3,
-                        1
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        3
+                        4,
+                        4
                     ],
                     "harvest"
                 ],
@@ -1883,22 +306,22 @@
                         1,
                         3
                     ],
-                    "harvest"
+                    "plant",
+                    "rice"
                 ],
                 [
                     [
-                        4,
+                        2,
                         0
                     ],
-                    "plant",
-                    "corn"
+                    "harvest"
                 ]
             ]
         },
         "ai_profits": {
-            "greedy": 380.6462188067894,
-            "backtracking": 59.316164489779986,
-            "dp": 363.9287085747816
+            "greedy": 389.527097639976,
+            "backtracking": 62.06888023793578,
+            "dp": 386.3678464946529
         }
     },
     {
@@ -1915,48 +338,8 @@
                 ],
                 [
                     [
-                        0,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
                         3,
                         0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        4,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        2,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        3,
-                        2
                     ],
                     "plant",
                     "corn"
@@ -1967,139 +350,15 @@
                         1
                     ],
                     "plant",
-                    "corn"
+                    "tomato"
                 ],
                 [
                     [
-                        4,
+                        0,
                         1
                     ],
                     "plant",
-                    "corn"
-                ]
-            ],
-            "backtracking": [
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ]
-            ],
-            "dp": [
-                [
-                    [
-                        1,
-                        4
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        3
-                    ],
-                    "plant",
-                    "corn"
+                    "carrot"
                 ],
                 [
                     [
@@ -2107,87 +366,11 @@
                         4
                     ],
                     "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        3,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ]
-            ]
-        },
-        "ai_profits": {
-            "greedy": 379.14571218067726,
-            "backtracking": 60.5268571725199,
-            "dp": 349.17523072033293
-        }
-    },
-    {
-        "budget": 150,
-        "ai_plans": {
-            "greedy": [
-                [
-                    [
-                        3,
-                        4
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        3
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        1,
-                        2
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        4,
-                        0
-                    ],
-                    "plant",
                     "corn"
                 ],
                 [
                     [
                         0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        2,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        3,
-                        2
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        1,
                         4
                     ],
                     "plant",
@@ -2196,6 +379,30 @@
                 [
                     [
                         2,
+                        4
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        4,
+                        2
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        1,
+                        0
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        3,
                         3
                     ],
                     "plant",
@@ -2233,6 +440,78 @@
                         0
                     ],
                     "plant",
+                    "carrot"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "rice"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "tomato"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "carrot"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "rice"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "tomato"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "carrot"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
                     "rice"
                 ],
                 [
@@ -2265,14 +544,6 @@
                         0
                     ],
                     "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
                     "corn"
                 ],
                 [
@@ -2281,15 +552,7 @@
                         0
                     ],
                     "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
+                    "carrot"
                 ],
                 [
                     [
@@ -2311,266 +574,11 @@
             "dp": [
                 [
                     [
-                        2,
-                        2
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        2,
-                        3
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        3,
-                        1
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        1,
-                        1
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        3,
-                        1
-                    ],
-                    "harvest"
-                ]
-            ]
-        },
-        "ai_profits": {
-            "greedy": 377.1688077939363,
-            "backtracking": 60.84852480631233,
-            "dp": 335.4960204291945
-        }
-    },
-    {
-        "budget": 150,
-        "ai_plans": {
-            "greedy": [
-                [
-                    [
-                        3,
-                        1
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        1,
-                        2
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        1
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
                         4,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        2,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        1,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        3,
-                        3
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        4,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ]
-            ],
-            "backtracking": [
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ]
-            ],
-            "dp": [
-                [
-                    [
-                        1,
                         2
                     ],
                     "plant",
                     "rice"
-                ],
-                [
-                    [
-                        0,
-                        3
-                    ],
-                    "plant",
-                    "corn"
                 ],
                 [
                     [
@@ -2578,105 +586,23 @@
                         1
                     ],
                     "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        2,
+                        0
+                    ],
+                    "plant",
                     "tomato"
-                ],
-                [
-                    [
-                        3,
-                        3
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        3,
-                        3
-                    ],
-                    "plant",
-                    "rice"
                 ],
                 [
                     [
                         0,
-                        3
-                    ],
-                    "harvest"
-                ],
-                [
-                    [
-                        1,
-                        2
-                    ],
-                    "harvest"
-                ],
-                [
-                    [
-                        0,
-                        4
-                    ],
-                    "plant",
-                    "tomato"
-                ]
-            ]
-        },
-        "ai_profits": {
-            "greedy": 377.91473628385955,
-            "backtracking": 61.48130371707237,
-            "dp": 367.7927465736152
-        }
-    },
-    {
-        "budget": 150,
-        "ai_plans": {
-            "greedy": [
-                [
-                    [
-                        1,
                         1
                     ],
                     "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        3,
-                        3
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        3,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        2
-                    ],
-                    "plant",
-                    "corn"
+                    "carrot"
                 ],
                 [
                     [
@@ -2684,193 +610,7 @@
                         3
                     ],
                     "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        2,
-                        2
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        2,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ]
-            ],
-            "backtracking": [
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
                     "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ]
-            ],
-            "dp": [
-                [
-                    [
-                        3,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        2,
-                        3
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        1,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        1,
-                        2
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        1,
-                        2
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        2,
-                        3
-                    ],
-                    "harvest"
-                ],
-                [
-                    [
-                        3,
-                        0
-                    ],
-                    "harvest"
                 ],
                 [
                     [
@@ -2879,27 +619,13 @@
                     ],
                     "plant",
                     "rice"
-                ],
-                [
-                    [
-                        2,
-                        3
-                    ],
-                    "harvest"
-                ],
-                [
-                    [
-                        3,
-                        0
-                    ],
-                    "harvest"
                 ]
             ]
         },
         "ai_profits": {
-            "greedy": 377.73866026992016,
-            "backtracking": 61.92724723402685,
-            "dp": 356.89698019342023
+            "greedy": 398.0073652761706,
+            "backtracking": 62.83987486188331,
+            "dp": 381.7372787976516
         }
     },
     {
@@ -2909,26 +635,18 @@
                 [
                     [
                         0,
-                        0
+                        2
                     ],
                     "plant",
                     "rice"
                 ],
                 [
                     [
-                        0,
-                        3
+                        2,
+                        0
                     ],
                     "plant",
                     "corn"
-                ],
-                [
-                    [
-                        3,
-                        2
-                    ],
-                    "plant",
-                    "tomato"
                 ],
                 [
                     [
@@ -2936,11 +654,27 @@
                         4
                     ],
                     "plant",
-                    "corn"
+                    "tomato"
+                ],
+                [
+                    [
+                        1,
+                        4
+                    ],
+                    "plant",
+                    "carrot"
                 ],
                 [
                     [
                         4,
+                        2
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        0,
                         0
                     ],
                     "plant",
@@ -2949,6 +683,14 @@
                 [
                     [
                         2,
+                        2
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        4,
                         0
                     ],
                     "plant",
@@ -2965,14 +707,6 @@
                 [
                     [
                         1,
-                        1
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
                         1
                     ],
                     "plant",
@@ -3002,7 +736,7 @@
                         0
                     ],
                     "plant",
-                    "rice"
+                    "tomato"
                 ],
                 [
                     [
@@ -3010,23 +744,7 @@
                         0
                     ],
                     "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
+                    "carrot"
                 ],
                 [
                     [
@@ -3051,6 +769,22 @@
                     ],
                     "plant",
                     "tomato"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "rice"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "rice"
                 ],
                 [
                     [
@@ -3081,71 +815,57 @@
                 [
                     [
                         3,
-                        2
+                        3
                     ],
                     "plant",
                     "rice"
                 ],
                 [
                     [
-                        2,
-                        4
+                        0,
+                        1
                     ],
                     "plant",
                     "corn"
                 ],
                 [
                     [
-                        1,
-                        4
+                        0,
+                        2
                     ],
                     "plant",
                     "tomato"
                 ],
                 [
                     [
-                        1,
-                        1
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        1,
-                        1
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
                         2,
-                        4
+                        1
                     ],
-                    "harvest"
+                    "plant",
+                    "carrot"
                 ],
                 [
                     [
-                        3,
-                        2
+                        1,
+                        3
                     ],
-                    "harvest"
+                    "plant",
+                    "rice"
                 ],
                 [
                     [
                         4,
-                        0
+                        4
                     ],
                     "plant",
-                    "corn"
+                    "carrot"
                 ]
             ]
         },
         "ai_profits": {
-            "greedy": 376.81880958864474,
-            "backtracking": 63.116665334342116,
-            "dp": 357.5979586883421
+            "greedy": 394.93069490941247,
+            "backtracking": 62.486208324189775,
+            "dp": 384.1531237842828
         }
     },
     {
@@ -3155,42 +875,10 @@
                 [
                     [
                         4,
-                        4
+                        1
                     ],
                     "plant",
                     "rice"
-                ],
-                [
-                    [
-                        2,
-                        1
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        1,
-                        1
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        4,
-                        0
-                    ],
-                    "plant",
-                    "corn"
                 ],
                 [
                     [
@@ -3202,8 +890,24 @@
                 ],
                 [
                     [
-                        4,
+                        1,
                         2
+                    ],
+                    "plant",
+                    "tomato"
+                ],
+                [
+                    [
+                        3,
+                        3
+                    ],
+                    "plant",
+                    "carrot"
+                ],
+                [
+                    [
+                        0,
+                        0
                     ],
                     "plant",
                     "corn"
@@ -3211,7 +915,31 @@
                 [
                     [
                         0,
+                        4
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        2,
                         0
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        4,
+                        4
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        0,
+                        1
                     ],
                     "plant",
                     "corn"
@@ -3248,7 +976,7 @@
                         0
                     ],
                     "plant",
-                    "rice"
+                    "tomato"
                 ],
                 [
                     [
@@ -3256,7 +984,7 @@
                         0
                     ],
                     "plant",
-                    "corn"
+                    "carrot"
                 ],
                 [
                     [
@@ -3312,7 +1040,7 @@
                         0
                     ],
                     "plant",
-                    "rice"
+                    "carrot"
                 ],
                 [
                     [
@@ -3329,37 +1057,107 @@
                     ],
                     "plant",
                     "corn"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "tomato"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "rice"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "rice"
                 ]
             ],
             "dp": [
                 [
                     [
-                        2,
-                        1
+                        3,
+                        3
                     ],
                     "plant",
                     "rice"
                 ],
                 [
                     [
-                        4,
-                        3
+                        1,
+                        1
                     ],
                     "plant",
                     "corn"
                 ],
                 [
                     [
-                        0,
-                        1
+                        4,
+                        4
                     ],
                     "plant",
                     "tomato"
                 ],
                 [
                     [
+                        2,
+                        2
+                    ],
+                    "plant",
+                    "carrot"
+                ],
+                [
+                    [
                         1,
-                        4
+                        3
+                    ],
+                    "plant",
+                    "rice"
+                ],
+                [
+                    [
+                        1,
+                        3
+                    ],
+                    "plant",
+                    "rice"
+                ],
+                [
+                    [
+                        1,
+                        1
+                    ],
+                    "harvest"
+                ],
+                [
+                    [
+                        3,
+                        3
+                    ],
+                    "harvest"
+                ],
+                [
+                    [
+                        0,
+                        0
                     ],
                     "plant",
                     "corn"
@@ -3367,9 +1165,9 @@
             ]
         },
         "ai_profits": {
-            "greedy": 379.2574585324367,
-            "backtracking": 60.150785332638634,
-            "dp": 348.03152799937226
+            "greedy": 390.38890137587475,
+            "backtracking": 61.982526247790645,
+            "dp": 385.1756952158748
         }
     },
     {
@@ -3378,11 +1176,51 @@
             "greedy": [
                 [
                     [
+                        0,
+                        2
+                    ],
+                    "plant",
+                    "rice"
+                ],
+                [
+                    [
+                        0,
+                        4
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        2,
+                        1
+                    ],
+                    "plant",
+                    "tomato"
+                ],
+                [
+                    [
+                        4,
+                        0
+                    ],
+                    "plant",
+                    "carrot"
+                ],
+                [
+                    [
                         4,
                         4
                     ],
                     "plant",
-                    "rice"
+                    "corn"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "corn"
                 ],
                 [
                     [
@@ -3398,52 +1236,20 @@
                         2
                     ],
                     "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        3,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        2
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        1,
-                        1
-                    ],
-                    "plant",
                     "corn"
                 ],
                 [
                     [
                         0,
                         1
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        0,
+                        3
                     ],
                     "plant",
                     "corn"
@@ -3480,14 +1286,6 @@
                         0
                     ],
                     "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
                     "rice"
                 ],
                 [
@@ -3512,7 +1310,7 @@
                         0
                     ],
                     "plant",
-                    "rice"
+                    "carrot"
                 ],
                 [
                     [
@@ -3529,6 +1327,30 @@
                     ],
                     "plant",
                     "corn"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "rice"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "carrot"
                 ],
                 [
                     [
@@ -3550,72 +1372,50 @@
             "dp": [
                 [
                     [
-                        2,
-                        1
+                        4,
+                        0
                     ],
                     "plant",
                     "rice"
                 ],
                 [
                     [
-                        4,
-                        4
+                        0,
+                        2
                     ],
                     "plant",
                     "corn"
                 ],
                 [
                     [
-                        2,
-                        4
+                        3,
+                        2
                     ],
                     "plant",
                     "tomato"
                 ],
                 [
                     [
-                        1,
-                        2
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        1,
-                        2
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
                         2,
-                        1
-                    ],
-                    "harvest"
-                ],
-                [
-                    [
-                        4,
                         4
                     ],
-                    "harvest"
+                    "plant",
+                    "carrot"
                 ],
                 [
                     [
                         1,
-                        1
+                        0
                     ],
                     "plant",
-                    "rice"
+                    "carrot"
                 ]
             ]
         },
         "ai_profits": {
-            "greedy": 376.78667132556143,
-            "backtracking": 62.55796731271892,
-            "dp": 378.1740890761596
+            "greedy": 399.7431949935033,
+            "backtracking": 61.52472524200711,
+            "dp": 392.34065406219867
         }
     },
     {
@@ -3625,42 +1425,10 @@
                 [
                     [
                         3,
-                        1
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        1
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
                         2
                     ],
                     "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        4,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        1,
-                        4
-                    ],
-                    "plant",
-                    "corn"
+                    "rice"
                 ],
                 [
                     [
@@ -3673,6 +1441,22 @@
                 [
                     [
                         2,
+                        4
+                    ],
+                    "plant",
+                    "tomato"
+                ],
+                [
+                    [
+                        4,
+                        3
+                    ],
+                    "plant",
+                    "carrot"
+                ],
+                [
+                    [
+                        0,
                         2
                     ],
                     "plant",
@@ -3680,7 +1464,23 @@
                 ],
                 [
                     [
-                        3,
+                        4,
+                        0
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        0,
+                        4
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        1,
                         3
                     ],
                     "plant",
@@ -3688,7 +1488,15 @@
                 ],
                 [
                     [
-                        4,
+                        2,
+                        1
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        0,
                         0
                     ],
                     "plant",
@@ -3710,7 +1518,7 @@
                         0
                     ],
                     "plant",
-                    "rice"
+                    "corn"
                 ],
                 [
                     [
@@ -3718,7 +1526,7 @@
                         0
                     ],
                     "plant",
-                    "corn"
+                    "tomato"
                 ],
                 [
                     [
@@ -3766,6 +1574,22 @@
                         0
                     ],
                     "plant",
+                    "tomato"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "carrot"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
                     "rice"
                 ],
                 [
@@ -3783,77 +1607,63 @@
                     ],
                     "plant",
                     "corn"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "rice"
                 ]
             ],
             "dp": [
                 [
                     [
-                        1,
-                        4
+                        3,
+                        1
                     ],
                     "plant",
                     "rice"
                 ],
                 [
                     [
-                        0,
-                        3
+                        3,
+                        4
                     ],
                     "plant",
                     "corn"
                 ],
                 [
                     [
-                        0,
+                        4,
                         1
                     ],
                     "plant",
                     "tomato"
-                ],
-                [
-                    [
-                        3,
-                        1
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        3,
-                        1
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        3
-                    ],
-                    "harvest"
-                ],
-                [
-                    [
-                        1,
-                        4
-                    ],
-                    "harvest"
                 ],
                 [
                     [
                         4,
-                        4
+                        3
                     ],
                     "plant",
-                    "tomato"
+                    "carrot"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "corn"
                 ]
             ]
         },
         "ai_profits": {
-            "greedy": 374.7784814979459,
-            "backtracking": 60.34223481673325,
-            "dp": 365.3603109830128
+            "greedy": 396.4700383026073,
+            "backtracking": 63.01351113772846,
+            "dp": 379.8269779330134
         }
     },
     {
@@ -3863,34 +1673,10 @@
                 [
                     [
                         2,
-                        3
+                        1
                     ],
                     "plant",
                     "rice"
-                ],
-                [
-                    [
-                        3,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        3,
-                        3
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
                 ],
                 [
                     [
@@ -3903,6 +1689,22 @@
                 [
                     [
                         0,
+                        2
+                    ],
+                    "plant",
+                    "tomato"
+                ],
+                [
+                    [
+                        0,
+                        3
+                    ],
+                    "plant",
+                    "carrot"
+                ],
+                [
+                    [
+                        4,
                         4
                     ],
                     "plant",
@@ -3911,14 +1713,6 @@
                 [
                     [
                         0,
-                        2
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        2,
                         0
                     ],
                     "plant",
@@ -3926,7 +1720,31 @@
                 ],
                 [
                     [
+                        2,
+                        3
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        4,
+                        2
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
                         1,
+                        4
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        0,
                         1
                     ],
                     "plant",
@@ -3980,14 +1798,6 @@
                         0
                     ],
                     "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
                     "rice"
                 ],
                 [
@@ -4036,7 +1846,31 @@
                         0
                     ],
                     "plant",
+                    "carrot"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
                     "rice"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "carrot"
                 ],
                 [
                     [
@@ -4050,8 +1884,8 @@
             "dp": [
                 [
                     [
-                        1,
-                        4
+                        2,
+                        1
                     ],
                     "plant",
                     "rice"
@@ -4067,33 +1901,40 @@
                 [
                     [
                         2,
-                        2
+                        3
                     ],
                     "plant",
                     "tomato"
                 ],
                 [
                     [
+                        4,
+                        3
+                    ],
+                    "plant",
+                    "carrot"
+                ],
+                [
+                    [
                         1,
-                        1
+                        2
                     ],
                     "plant",
                     "rice"
                 ],
                 [
                     [
-                        0,
-                        0
+                        4,
+                        3
                     ],
-                    "plant",
-                    "tomato"
+                    "harvest"
                 ]
             ]
         },
         "ai_profits": {
-            "greedy": 376.65715140156215,
-            "backtracking": 61.676898369828656,
-            "dp": 338.20026860436343
+            "greedy": 393.81692675461915,
+            "backtracking": 61.86160894134898,
+            "dp": 380.80371092273907
         }
     },
     {
@@ -4102,16 +1943,16 @@
             "greedy": [
                 [
                     [
-                        1,
-                        0
+                        0,
+                        3
                     ],
                     "plant",
                     "rice"
                 ],
                 [
                     [
-                        1,
-                        1
+                        2,
+                        3
                     ],
                     "plant",
                     "corn"
@@ -4119,7 +1960,7 @@
                 [
                     [
                         3,
-                        2
+                        4
                     ],
                     "plant",
                     "tomato"
@@ -4127,10 +1968,10 @@
                 [
                     [
                         0,
-                        4
+                        1
                     ],
                     "plant",
-                    "corn"
+                    "carrot"
                 ],
                 [
                     [
@@ -4142,23 +1983,15 @@
                 ],
                 [
                     [
-                        4,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
                         2,
-                        4
+                        0
                     ],
                     "plant",
                     "corn"
                 ],
                 [
                     [
-                        0,
+                        4,
                         2
                     ],
                     "plant",
@@ -4167,107 +2000,15 @@
                 [
                     [
                         1,
-                        3
-                    ],
-                    "plant",
-                    "corn"
-                ]
-            ],
-            "backtracking": [
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
+                        2
                     ],
                     "plant",
                     "corn"
                 ],
                 [
                     [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "rice"
-                ]
-            ],
-            "dp": [
-                [
-                    [
-                        4,
-                        1
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
-                        1
+                        1,
+                        4
                     ],
                     "plant",
                     "corn"
@@ -4275,128 +2016,7 @@
                 [
                     [
                         3,
-                        3
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        1,
-                        3
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        1,
-                        3
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        0,
                         1
-                    ],
-                    "harvest"
-                ],
-                [
-                    [
-                        4,
-                        1
-                    ],
-                    "harvest"
-                ],
-                [
-                    [
-                        3,
-                        3
-                    ],
-                    "harvest"
-                ]
-            ]
-        },
-        "ai_profits": {
-            "greedy": 380.5646298877426,
-            "backtracking": 59.84586569028377,
-            "dp": 338.36788648078823
-        }
-    },
-    {
-        "budget": 150,
-        "ai_plans": {
-            "greedy": [
-                [
-                    [
-                        4,
-                        3
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        4,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        2,
-                        2
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        0,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        4,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        0,
-                        2
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        2,
-                        0
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        2,
-                        4
                     ],
                     "plant",
                     "corn"
@@ -4457,7 +2077,7 @@
                         0
                     ],
                     "plant",
-                    "rice"
+                    "carrot"
                 ],
                 [
                     [
@@ -4490,6 +2110,54 @@
                     ],
                     "plant",
                     "rice"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "tomato"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "carrot"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "rice"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "carrot"
                 ],
                 [
                     [
@@ -4512,30 +2180,6 @@
                 [
                     [
                         1,
-                        4
-                    ],
-                    "plant",
-                    "rice"
-                ],
-                [
-                    [
-                        2,
-                        4
-                    ],
-                    "plant",
-                    "corn"
-                ],
-                [
-                    [
-                        3,
-                        3
-                    ],
-                    "plant",
-                    "tomato"
-                ],
-                [
-                    [
-                        1,
                         1
                     ],
                     "plant",
@@ -4543,18 +2187,79 @@
                 ],
                 [
                     [
-                        0,
-                        0
+                        2,
+                        3
                     ],
                     "plant",
                     "corn"
+                ],
+                [
+                    [
+                        2,
+                        4
+                    ],
+                    "plant",
+                    "tomato"
+                ],
+                [
+                    [
+                        2,
+                        1
+                    ],
+                    "plant",
+                    "carrot"
+                ],
+                [
+                    [
+                        3,
+                        2
+                    ],
+                    "plant",
+                    "rice"
+                ],
+                [
+                    [
+                        3,
+                        2
+                    ],
+                    "plant",
+                    "rice"
+                ],
+                [
+                    [
+                        1,
+                        1
+                    ],
+                    "harvest"
+                ],
+                [
+                    [
+                        2,
+                        3
+                    ],
+                    "harvest"
+                ],
+                [
+                    [
+                        1,
+                        2
+                    ],
+                    "plant",
+                    "rice"
+                ],
+                [
+                    [
+                        1,
+                        1
+                    ],
+                    "harvest"
                 ]
             ]
         },
         "ai_profits": {
-            "greedy": 379.2981720508596,
-            "backtracking": 61.948407907197506,
-            "dp": 366.3812778147543
+            "greedy": 396.71221186675825,
+            "backtracking": 61.82544766265605,
+            "dp": 365.9994465498821
         }
     },
     {
@@ -4571,7 +2276,7 @@
                 ],
                 [
                     [
-                        3,
+                        2,
                         2
                     ],
                     "plant",
@@ -4579,11 +2284,19 @@
                 ],
                 [
                     [
-                        0,
-                        0
+                        3,
+                        3
                     ],
                     "plant",
                     "tomato"
+                ],
+                [
+                    [
+                        1,
+                        2
+                    ],
+                    "plant",
+                    "carrot"
                 ],
                 [
                     [
@@ -4596,7 +2309,7 @@
                 [
                     [
                         4,
-                        4
+                        1
                     ],
                     "plant",
                     "corn"
@@ -4604,7 +2317,7 @@
                 [
                     [
                         0,
-                        2
+                        0
                     ],
                     "plant",
                     "corn"
@@ -4620,6 +2333,32 @@
                 [
                     [
                         4,
+                        4
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        0,
+                        1
+                    ],
+                    "plant",
+                    "corn"
+                ]
+            ],
+            "backtracking": [
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "rice"
+                ],
+                [
+                    [
+                        0,
                         0
                     ],
                     "plant",
@@ -4627,7 +2366,253 @@
                 ],
                 [
                     [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "rice"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "rice"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "tomato"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "carrot"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "rice"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "tomato"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "carrot"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "rice"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "carrot"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "rice"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "corn"
+                ]
+            ],
+            "dp": [
+                [
+                    [
+                        3,
+                        4
+                    ],
+                    "plant",
+                    "rice"
+                ],
+                [
+                    [
+                        4,
+                        2
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        0,
+                        2
+                    ],
+                    "plant",
+                    "tomato"
+                ],
+                [
+                    [
+                        3,
+                        3
+                    ],
+                    "plant",
+                    "carrot"
+                ],
+                [
+                    [
+                        2,
+                        0
+                    ],
+                    "plant",
+                    "carrot"
+                ]
+            ]
+        },
+        "ai_profits": {
+            "greedy": 388.1077958114425,
+            "backtracking": 62.171092760717514,
+            "dp": 375.40669722302084
+        }
+    },
+    {
+        "budget": 150,
+        "ai_plans": {
+            "greedy": [
+                [
+                    [
+                        0,
+                        3
+                    ],
+                    "plant",
+                    "rice"
+                ],
+                [
+                    [
                         1,
+                        2
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        2,
+                        3
+                    ],
+                    "plant",
+                    "tomato"
+                ],
+                [
+                    [
+                        1,
+                        4
+                    ],
+                    "plant",
+                    "carrot"
+                ],
+                [
+                    [
+                        4,
+                        0
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        4,
+                        4
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        2,
+                        0
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        4,
+                        2
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        3,
                         1
                     ],
                     "plant",
@@ -4689,7 +2674,7 @@
                         0
                     ],
                     "plant",
-                    "rice"
+                    "carrot"
                 ],
                 [
                     [
@@ -4698,6 +2683,30 @@
                     ],
                     "plant",
                     "rice"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "corn"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "tomato"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "carrot"
                 ],
                 [
                     [
@@ -4721,6 +2730,22 @@
                         0
                     ],
                     "plant",
+                    "tomato"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
+                    "carrot"
+                ],
+                [
+                    [
+                        0,
+                        0
+                    ],
+                    "plant",
                     "rice"
                 ],
                 [
@@ -4729,22 +2754,22 @@
                         0
                     ],
                     "plant",
-                    "corn"
+                    "rice"
                 ]
             ],
             "dp": [
                 [
                     [
                         0,
-                        1
+                        4
                     ],
                     "plant",
                     "rice"
                 ],
                 [
                     [
-                        2,
-                        1
+                        1,
+                        2
                     ],
                     "plant",
                     "corn"
@@ -4759,26 +2784,25 @@
                 ],
                 [
                     [
-                        1,
-                        2
+                        3,
+                        0
                     ],
                     "plant",
-                    "rice"
+                    "carrot"
                 ],
                 [
                     [
                         0,
-                        0
+                        4
                     ],
-                    "plant",
-                    "tomato"
+                    "harvest"
                 ]
             ]
         },
         "ai_profits": {
-            "greedy": 374.935469163251,
-            "backtracking": 61.781666094382466,
-            "dp": 362.72551019000673
+            "greedy": 395.89546208475025,
+            "backtracking": 63.06863081054894,
+            "dp": 360.3985436147497
         }
     }
 ]
