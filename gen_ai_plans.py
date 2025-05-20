@@ -18,7 +18,7 @@ BASE_CROPS = {
     "rice": {"cost": 10, "time": 2, "profit": 25},
     "corn": {"cost": 15, "time": 2, "profit": 35},
     "tomato": {"cost": 20, "time": 4, "profit": 50},
-    "carrot": {"cost": 12, "time": 3, "profit": 40}  # Thêm carrot
+    "carrot": {"cost": 12, "time": 3, "profit": 40}
 }
 
 WEATHER_TYPES = ["Sunny", "Rainy", "Dry"]
@@ -40,8 +40,8 @@ def apply_weather_effects(crop, weather, day, remaining_days):
         if weather == "Sunny": time_reduction = 1
         elif weather == "Rainy": fail_chance = 0.5
     elif crop == "carrot":
-        if weather == "Sunny": time_reduction = 1  # Phát triển nhanh hơn trong "Sunny"
-        elif weather == "Dry": fail_chance = 0.5  # Dễ thất bại trong "Dry"
+        if weather == "Sunny": time_reduction = 1
+        elif weather == "Dry": fail_chance = 0.5
     effective_time = max(1, base_time - time_reduction)
     if remaining_days < effective_time: return 0, effective_time, fail_chance
     return effective_time, effective_time, fail_chance
@@ -57,7 +57,7 @@ def apply_crop_abilities(crop, grid, i, j, weather, day, weather_history, profit
     elif crop == "tomato":
         if weather == "Sunny": bonus += 20
     elif crop == "carrot":
-        if i == 0 or i == GRID_SIZE-1 or j == 0 or j == GRID_SIZE-1: bonus += 10  # Bonus 10 nếu ở cạnh ngoài
+        if i == 0 or i == GRID_SIZE-1 or j == 0 or j == GRID_SIZE-1: bonus += 10
     return profit + bonus
 
 def apply_market_prices(crop, day, harvest_history):
@@ -70,27 +70,22 @@ def apply_market_prices(crop, day, harvest_history):
 
 def score_position(grid, i, j, crop, weather_scenarios, t):
     score = 0
+    expected_harvest_day = t + BASE_CROPS[crop]["time"]
+    if expected_harvest_day < DAYS:
+        # Tính xác suất thời tiết thuận lợi
+        favorable_weather_count = sum(1 for scenario in weather_scenarios 
+                                   if scenario[expected_harvest_day] in {"Sunny" if crop in ["tomato", "carrot"] else "Rainy" if crop == "rice" else "Dry" if crop == "corn" else "Sunny"})
+        weather_score = (favorable_weather_count / len(weather_scenarios)) * BASE_CROPS[crop]["profit"]
+        score += weather_score
+    # Thêm ưu tiên vị trí (gần cạnh cho carrot, lân cận rice)
     if crop == "rice":
         score += sum(1 for di, dj in [(-1,0), (1,0), (0,-1), (0,1)]
-                    if 0 <= i + di < GRID_SIZE and 0 <= j + dj < GRID_SIZE and
-                    (grid[i + di][j + dj] is None or grid[i + di][j + dj] == "rice")) * 10
-    elif crop == "tomato":
-        expected_harvest_day = t + BASE_CROPS[crop]["time"]
-        if expected_harvest_day < DAYS:
-            score += (sum(1 for scenario in weather_scenarios if scenario[expected_harvest_day] == "Sunny") / len(weather_scenarios)) * 20
-    elif crop == "corn":
-        expected_harvest_day = t + BASE_CROPS[crop]["time"]
-        if expected_harvest_day < DAYS and expected_harvest_day >= 2:
-            score += (sum(1 for scenario in weather_scenarios if scenario[expected_harvest_day-1] == "Dry" and scenario[expected_harvest_day-2] == "Dry") / len(weather_scenarios)) * 15
+                    if 0 <= i + di < GRID_SIZE and 0 <= j + dj < GRID_SIZE and grid[i + di][j + dj] == "rice") * 10
     elif crop == "carrot":
-        # Ưu tiên vị trí gần cạnh để tối ưu bonus
         edge_distance = min(i, GRID_SIZE-1-i, j, GRID_SIZE-1-j)
-        score += (GRID_SIZE - edge_distance) * 5  # Tăng điểm nếu gần cạnh
-        expected_harvest_day = t + BASE_CROPS[crop]["time"]
-        if expected_harvest_day < DAYS:
-            score += (sum(1 for scenario in weather_scenarios if scenario[expected_harvest_day] == "Sunny") / len(weather_scenarios)) * 10  # Ưu tiên "Sunny"
+        score += (GRID_SIZE - edge_distance) * 5
     min_dist = min((math.sqrt((i - pi)**2 + (j - pj)**2) for pi in range(GRID_SIZE) for pj in range(GRID_SIZE) if grid[pi][pj] is not None), default=float('inf'))
-    score += min_dist
+    score += min_dist * 5  # Ưu tiên khoảng cách với cây đã trồng
     return score
 
 def simulate_plan(plan, weather_scenario):
@@ -135,17 +130,18 @@ def estimate_upper_bound(t, grid, harvested_crops, remaining_budget, scenario):
         for i in range(GRID_SIZE):
             for j in range(GRID_SIZE):
                 if temp_grid[i][j]:
-                    if weather in [("Sunny", "tomato"), ("Rainy", "rice"), ("Dry", "corn"), ("Sunny", "carrot")][{"Sunny": 0, "Rainy": 1, "Dry": 2, "Sunny": 3}[weather] % 4]:
+                    effective_time, _, fail_chance = apply_weather_effects(temp_grid[i][j], weather, day, DAYS - day)
+                    if weather in [("Sunny", "tomato"), ("Rainy", "rice"), ("Dry", "corn"), ("Sunny", "carrot")][{"Sunny": 0, "Rainy": 1, "Dry": 2}[weather] % 3]:
                         temp_timers[i][j] -= 1
                     temp_timers[i][j] = max(0, temp_timers[i][j] - 1)
-                    if temp_timers[i][j] <= 0:
-                        current_profit += BASE_CROPS[temp_grid[i][j]]["profit"]
+                    if temp_timers[i][j] <= 0 and random.random() > fail_chance:
+                        current_profit += apply_market_prices(temp_grid[i][j], day, [{} for _ in range(day)])
                         temp_grid[i][j] = None
     empty_cells = sum(row.count(None) for row in grid)
-    best_crop = max(BASE_CROPS, key=lambda c: BASE_CROPS[c]["profit"] / BASE_CROPS[c]["time"] if remaining_budget >= BASE_CROPS[c]["cost"] else 0)
-    if best_crop:
+    best_crop = max(BASE_CROPS, key=lambda c: (BASE_CROPS[c]["profit"] * 0.9) / BASE_CROPS[c]["time"] if remaining_budget >= BASE_CROPS[c]["cost"] else 0)  # Giảm 10% để an toàn
+    if best_crop and remaining_budget >= BASE_CROPS[best_crop]["cost"]:
         max_plants = min(empty_cells, remaining_budget // BASE_CROPS[best_crop]["cost"])
-        current_profit += max_plants * BASE_CROPS[best_crop]["profit"]
+        current_profit += max_plants * (BASE_CROPS[best_crop]["profit"] * 0.9)  # Giảm 10% để an toàn
     if len(harvested_crops) + (1 if best_crop else 0) >= len(BASE_CROPS): current_profit += DIVERSITY_BONUS
     return current_profit
 
@@ -196,39 +192,55 @@ def generate_backtracking_plan(budget, weather_scenarios):
     timers = [[0 for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
     harvested_crops = set()
     action_count = [0]
-    def backtrack(t, budget_left, plan):
+
+    def backtrack(t, budget_left, plan, current_grid, current_timers, current_harvested):
         nonlocal best_plan, best_avg_profit
         if t >= DAYS or action_count[0] >= MAX_ACTIONS:
             avg_profit = sum(simulate_plan(plan, scenario) for scenario in weather_scenarios) / len(weather_scenarios)
-            if avg_profit > best_avg_profit: best_plan, best_avg_profit = plan[:], avg_profit
+            if avg_profit > best_avg_profit:
+                best_plan, best_avg_profit = plan[:], avg_profit
             return
-        upper_bound = estimate_upper_bound(t, grid, harvested_crops, budget_left, weather_scenarios[0])
-        if upper_bound <= best_avg_profit: return
-        current_plan, current_grid, current_timers, current_harvested = plan[:], [row[:] for row in grid], [row[:] for row in timers], harvested_crops.copy()
+        
+        upper_bound = estimate_upper_bound(t, current_grid, current_harvested, budget_left, weather_scenarios[0])
+        if upper_bound <= best_avg_profit:
+            return
+
+        temp_grid, temp_timers, temp_harvested = [row[:] for row in current_grid], [row[:] for row in current_timers], current_harvested.copy()
+        
+        # Thu hoạch trước nếu có cây sẵn sàng
         for i in range(GRID_SIZE):
             for j in range(GRID_SIZE):
-                if current_grid[i][j] and current_timers[i][j] <= t and action_count[0] < MAX_ACTIONS:
-                    current_plan.append([[i, j], "harvest"])
-                    current_harvested.add(current_grid[i][j])
-                    current_grid[i][j] = None
-                    current_timers[i][j] = 0
+                if temp_grid[i][j] and temp_timers[i][j] <= t and action_count[0] < MAX_ACTIONS:
+                    temp_plan = plan + [[[i, j], "harvest"]]
+                    temp_harvested.add(temp_grid[i][j])
+                    temp_grid[i][j] = None
+                    temp_timers[i][j] = 0
                     action_count[0] += 1
-        available_positions = [(i, j) for i in range(GRID_SIZE) for j in range(GRID_SIZE) if current_grid[i][j] is None]
+                    backtrack(t + 1, budget_left, temp_plan, temp_grid, temp_timers, temp_harvested)
+                    action_count[0] -= 1
+                    temp_grid[i][j] = current_grid[i][j]  # Khôi phục trạng thái
+                    temp_timers[i][j] = current_timers[i][j]
+
+        # Trồng cây mới, ưu tiên cây ngắn ngày
+        available_positions = [(i, j) for i in range(GRID_SIZE) for j in range(GRID_SIZE) if temp_grid[i][j] is None]
+        crops_priority = sorted(BASE_CROPS.keys(), key=lambda c: BASE_CROPS[c]["time"])
         if available_positions and action_count[0] < MAX_ACTIONS:
-            for crop in BASE_CROPS:
+            for crop in crops_priority:
                 cost = BASE_CROPS[crop]["cost"]
                 if budget_left >= cost and t + BASE_CROPS[crop]["time"] <= DAYS:
-                    i, j = max(available_positions, key=lambda pos: score_position(current_grid, pos[0], pos[1], crop, weather_scenarios, t))
-                    current_plan.append([[i, j], "plant", crop])
-                    current_grid[i][j] = crop
-                    current_timers[i][j] = BASE_CROPS[crop]["time"]
+                    i, j = max(available_positions, key=lambda pos: score_position(temp_grid, pos[0], pos[1], crop, weather_scenarios, t))
+                    temp_plan = plan + [[[i, j], "plant", crop]]
+                    temp_grid[i][j] = crop
+                    temp_timers[i][j] = BASE_CROPS[crop]["time"]
                     action_count[0] += 1
-                    backtrack(t + 1, budget_left - cost, current_plan)
-                    current_grid[i][j] = None
-                    current_timers[i][j] = 0
+                    backtrack(t + 1, budget_left - cost, temp_plan, temp_grid, temp_timers, temp_harvested)
                     action_count[0] -= 1
-        backtrack(t + 1, budget_left, current_plan)
-    backtrack(0, budget, [])
+                    temp_grid[i][j] = None
+                    temp_timers[i][j] = 0
+
+        backtrack(t + 1, budget_left, plan, temp_grid, temp_timers, temp_harvested)
+
+    backtrack(0, budget, [], grid, timers, harvested_crops)
     return best_plan, best_avg_profit
 
 def generate_dp_plan(budget, weather_scenarios):
